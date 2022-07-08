@@ -1,0 +1,47 @@
+.header-main {
+  background: white;
+  height: 80px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+}
+
+.area-logo {
+  display: flex;
+  align-items: center;
+
+  .area-logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  span {
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+}
+
+.lastacess {
+  font-weight: bold;
+}
+
+.btn-header {
+  display: flex;
+  gap: 30px;
+}
+
+@media (max-width: 650px) {
+  .header-main {
+    flex-direction: column;
+    height: max-content;
+    gap: 10px;
+
+    .area-logo {
+      padding-top: 10px;
+    }
+  }
+}

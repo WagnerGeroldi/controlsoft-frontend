@@ -1,0 +1,25 @@
+body {
+  background: #353535;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+p {
+  margin-bottom: 20px;
+}
+
+.fa-user-plus {
+  color: blue;
+  transition: 0.3s;
+
+  &:hover {
+    color: darkblue;
+  }
+
+}

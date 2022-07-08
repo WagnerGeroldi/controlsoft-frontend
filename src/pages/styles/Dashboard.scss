@@ -1,0 +1,38 @@
+#home {
+  .dashboard {
+    text-align: center;
+  }
+
+  .content-dashboard {
+    display: none;
+  }
+
+  .h1 {
+    text-align: center;
+  }
+  .row {
+    .card {
+      max-width: 16rem;
+
+      .card-title {
+        text-align: center;
+      }
+
+      .card-body {
+        p {
+          text-decoration: none;
+          color: white;
+
+          &:hover {
+            color: yellow;
+          }
+        }
+
+        .size-number {
+          text-align: center;
+          font-size: 80px;
+        }
+      }
+    }
+  }
+}
