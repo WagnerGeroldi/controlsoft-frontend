@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getUserLocalStorage } from "../state/SaveLocalStorage";
 
-const baseURL = "http://localhost:3333";
+const baseURL = "https://controlsoft-node.herokuapp.com/";
 
 const api = axios.create({
   baseURL: baseURL,
