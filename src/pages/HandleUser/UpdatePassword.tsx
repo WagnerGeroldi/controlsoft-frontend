@@ -1,26 +1,46 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { Box, Button, Grid, Paper, TextField } from "@mui/material";
+/* imports React */
 import { useNavigate } from "react-router-dom";
-import { getUserLocalStorage } from "../../state/SaveLocalStorage";
-import "../styles/alert.scss";
-import "../styles/UpdatePassword.scss";
-import "../styles/Register.scss";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
+/* imports Mui */
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  TextField,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
+
+/* imports libs */
+import { ToastContainer, toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+/* imports css */
+import "../styles/alert.scss";
+import "../styles/UpdatePassword.scss";
+import "../styles/Register.scss";
+import "react-toastify/dist/ReactToastify.css";
+
+/* imports extras */
+import { getUserLocalStorage } from "../../state/SaveLocalStorage";
 import { api } from "../../api/api";
-import { useState } from "react";
+
+/*import de componentes */
 import { ButtonSubmit } from "../../components/ButtonSubmit";
 import { ModalInfo } from "../../components/Modals/ModalInfo";
 
+interface IPassword {
+  password: string;
+  newpassword: string;
+  confirmnewpassword: string;
+}
+
+/*validacao form */
 const validationRegistrerUser = yup.object().shape({
   password: yup
     .string()
@@ -40,7 +60,7 @@ const validationRegistrerUser = yup.object().shape({
 export function UpdatePassword() {
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = getUserLocalStorage();
+  const user = getUserLocalStorage();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -53,11 +73,11 @@ export function UpdatePassword() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IPassword>({
     resolver: yupResolver(validationRegistrerUser),
   });
 
-  const updatePassword = (data: any) =>
+  const updatePassword = (data: IPassword) =>
     api
       .post("/users/updatePassword", { data, user })
       .then((res) => {

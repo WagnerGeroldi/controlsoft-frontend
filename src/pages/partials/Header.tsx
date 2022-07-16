@@ -19,6 +19,7 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+import InventoryIcon from "@mui/icons-material/Inventory";
 
 /*imports CSS */
 import "./Header.scss";
@@ -29,14 +30,17 @@ import logo from "../../assets/images/logo-mini.svg";
 /*imports Extras */
 import {
   getUserLocalStorage,
+  setAuthLocalStorage,
+  setTokenLocalStorage,
   setUserLocalStorage,
 } from "../../state/SaveLocalStorage";
 import { ModalConfirm } from "../../components/Modals/ModalConfirm";
-import { ShowSaudation } from "../../services/ShowSaudation"
+import { ShowSaudation } from "../../services/ShowSaudation";
 import { HandleDate } from "../../services/HandleDate";
 
 export function Header(this: any) {
-  const { user } = getUserLocalStorage();
+
+  const user = getUserLocalStorage();
   const [menuOpen, setMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -44,26 +48,13 @@ export function Header(this: any) {
 
   const date = new Date(user.updatedAt);
 
-  const lastacess = HandleDate(date)
-  /*
-  ("0" + date.getDate()).slice(-2) +
-    "/" +
-    ("0" + (date.getMonth() + 1)).slice(-2) +
-    "/" +
-    date.getFullYear() +
-    " " +
-    ("0" + date.getHours()).slice(-2) +
-    ":" +
-    ("0" + date.getMinutes()).slice(-2);
-*/
+  const lastacess = HandleDate(date);
   let navigate = useNavigate();
 
-  function updateUser(id: string) {
-    navigate(`/user/update/${id}`);
-  }
-
   function logout() {
-    setUserLocalStorage(null);
+    setUserLocalStorage(null)
+    setTokenLocalStorage(null)
+    setAuthLocalStorage(null);
     navigate(`/`);
   }
 
@@ -89,15 +80,24 @@ export function Header(this: any) {
             </ListItemIcon>
             <ListItemText>Início</ListItemText>
           </ListItem>
-          
+
           <ListItem
             button
-            onClick={() => handleMenuClick(`/user/update/${user.id}`)}
+            onClick={() => handleMenuClick(`/clients/${user.id}`)}
           >
             <ListItemIcon>
               <PeopleAltIcon />
             </ListItemIcon>
             <ListItemText>Clientes</ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => handleMenuClick(`/products/${user.id}`)}
+          >
+            <ListItemIcon>
+              <InventoryIcon />
+            </ListItemIcon>
+            <ListItemText>Produtos</ListItemText>
           </ListItem>
           <ListItem button onClick={() => handleMenuClick("/finances")}>
             <ListItemIcon>
@@ -113,7 +113,7 @@ export function Header(this: any) {
           </ListItem>
           <ListItem
             button
-            onClick={() => handleMenuClick(`/user/update/${user.id}`)}
+            onClick={() => handleMenuClick(`/user/config/${user.id}`)}
           >
             <ListItemIcon>
               <AdminPanelSettingsIcon />
@@ -152,7 +152,10 @@ export function Header(this: any) {
           ) : (
             <div className="btn-header">
               <div>
-                <span> {ShowSaudation()} <strong>{user.name}</strong></span>
+                <span>
+                  {" "}
+                  {ShowSaudation()} <strong>{user.name}</strong>
+                </span>
                 <br />
                 <span>
                   <small>
@@ -171,10 +174,10 @@ export function Header(this: any) {
       </header>
       <ModalConfirm
         action={() => logout()}
-        title="Tem certeza que deseja sair?" 
+        title="Tem certeza que deseja sair?"
         setOpen={open}
         setClose={handleClose}
-        infoOne= "Sair"
+        infoOne="Sair"
       />
     </>
   );

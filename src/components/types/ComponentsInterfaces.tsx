@@ -8,8 +8,7 @@ export interface IButton {
   contentBtnSecondary: string;
 }
 
-
 export interface IButtonUnique {
-    link: string;
-    contentBtn: string;
-  }
+  link: string;
+  contentBtn: string;
+}

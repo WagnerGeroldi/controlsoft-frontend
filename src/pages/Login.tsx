@@ -1,29 +1,46 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { Box, Grid, Paper, TextField } from "@mui/material";
+/*import react */
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
-import useAuth from "../state/Auth";
+/*import MUI */
+import {
+  Box,
+  Grid,
+  Paper,
+  TextField,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
 
+/*import CSS */
 import "./styles/alert.scss";
-import "./styles/Login.scss";
-
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useForm } from "react-hook-form";
+/*import Extras */
+import useAuth from "../state/Auth";
+import { api } from "../api/api";
 
+/*import libs */
+import { ToastContainer, toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  setAuthLocalStorage,
+  setTokenLocalStorage,
+  setUserLocalStorage,
+} from "../state/SaveLocalStorage";
 
-import "./styles/Register.scss";
-import { api } from "../api/api";
+/*import componentes */
 import { ButtonDefault } from "../components/Button";
-import { useState } from "react";
-import { setUserLocalStorage } from "../state/SaveLocalStorage";
-import { getUserLocalStorage } from "../state/SaveLocalStorage";
 
+interface IUser {
+  email: string;
+  password: string;
+}
+
+/*validacao de dados */
 const validationRegistrerUser = yup.object().shape({
   email: yup
     .string()
@@ -39,35 +56,32 @@ export function Login() {
   let navigate = useNavigate();
   const { user, setUser }: any = useAuth();
   const [isLoading, setIsLoading] = useState(false);
- 
 
+  /*lidar com formulario */
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IUser>({
     resolver: yupResolver(validationRegistrerUser),
   });
 
-  const loginUser = (data: any) =>
+  /*consulta backend */
+  const loginUser = (data: IUser) =>
     api
       .post("/users/validate", data)
       .then((response) => {
         setIsLoading(true);
 
         setTimeout(() => {
-          setUserLocalStorage(response.data);
+          setUserLocalStorage(response.data.user);
+          setTokenLocalStorage(response.data.token);
+          setAuthLocalStorage(response.data.auth);
           navigate("/dashboard/" + response.data.user.id);
-          setUser({
-            logged: response.data.auth,
-            email: response.data.user.email,
-            name: response.data.user.name,
-          });
+          setUser(response.data);
         }, 2000);
       })
       .catch((error) => {
-        console.log(error.response.data.user);
-
         switch (error.response.status) {
           case 300:
             setIsLoading(true);
@@ -89,9 +103,9 @@ export function Login() {
         }
       });
 
-      function clearLocalStorage() {
-        setUserLocalStorage(null);
-      }
+  function clearLocalStorage() {
+    setUserLocalStorage(null);
+  }
 
   return (
     <>
@@ -99,12 +113,9 @@ export function Login() {
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />
           <CardContent>
-            <Typography
-              sx={{ fontSize: 20 }}
-              color="text.primary"
-              gutterBottom
-            >
-              <i className="fa fa-user fa-2x" aria-hidden="true"></i> ACESSE SUA CONTA
+            <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
+              <i className="fa fa-user fa-2x" aria-hidden="true"></i> ACESSE SUA
+              CONTA
             </Typography>
             <Paper sx={{ p: 2, margin: "auto", flexGrow: 1 }}>
               <Box
@@ -147,8 +158,11 @@ export function Login() {
                   contentBtnSecondary="Crie sua conta"
                 />
                 <br />
-                
-                <a href="/resetPassword" onClick={() => clearLocalStorage()}> Esqueci minha senha</a>
+
+                <a href="/resetPassword" onClick={() => clearLocalStorage()}>
+                  {" "}
+                  Esqueci minha senha
+                </a>
               </Box>
             </Paper>
           </CardContent>

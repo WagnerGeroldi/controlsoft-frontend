@@ -1,12 +1,9 @@
 /*imports react */
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 
 /*imports libs */
 import { ToastContainer, toast } from "react-toastify";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 /*imports extras */
 import { api } from "../api/api";
@@ -14,7 +11,7 @@ import { Header } from "./partials/Header";
 import { ModalConfirm } from "../components/Modals/ModalConfirm";
 import {
   getUserLocalStorage,
-  setUserLocalStorage,
+  getTokenLocalStorage,
 } from "../state/SaveLocalStorage";
 
 /*imports styles CSS */
@@ -22,50 +19,21 @@ import "./styles/ConfigPage.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 /*imports MUI */
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { Button } from "@mui/material";
 
-/*INTERFACES */
-interface UseFormInputs {
-  birthday: number;
-  name: string;
-  cep: number;
-  address: string;
-}
-
-const validationCreateResident = yup.object().shape({
-  name: yup.string().required("O nome é obrigatório"),
-  birthday: yup.date().required("Data é obrigatório"),
-  password: yup.string().required("A senha é obrigatória"),
-  address: yup.string().required("A rua é obrigatória"),
-});
-
-export function UpdateUser(this: any) {
-
+export function ConfigPage() {
+  const [userInfo, setUserInfo] = useState({} as any);
   const navigate = useNavigate();
   const { id } = useParams() as { id: string };
-  const {user, token} = getUserLocalStorage();
-
+  const user = getUserLocalStorage();
+  const token = getTokenLocalStorage();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const textModal = `Se você confirmar esta ação, não poderá reverter depois!
-  Pense bem antes de confirmar a exclusão!`
-
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<UseFormInputs>({
-    resolver: yupResolver(validationCreateResident),
-  });
-
+  Pense bem antes de confirmar a exclusão!`;
 
   /*Consultas BACKEND */
   useEffect(() => {
@@ -76,7 +44,7 @@ export function UpdateUser(this: any) {
         },
       })
       .then((res) => {
-        reset(res.data);
+        setUserInfo(res.data);
       })
       .catch((err) => {
         switch (err.response.status) {
@@ -93,21 +61,6 @@ export function UpdateUser(this: any) {
         }
       });
   }, []);
-
-  const updateUser = (data: any) =>
-    api
-      .put(`/users/${id}`, data)
-      .then((res) => {
-        const message = res.data.message;
-        setUserLocalStorage(data);
-        toast.success(message);
-        setTimeout(() => {
-          navigate("/" + id);
-        }, 1000);
-      })
-      .catch(() => {
-        toast.error("Houve um erro, tente novamente");
-      });
 
   async function deleteUser(id: string) {
     await api
@@ -133,108 +86,84 @@ export function UpdateUser(this: any) {
         <div className="info-user">
           <h1> Dados do Usuário</h1>
         </div>
-        <Box
-          onSubmit={handleSubmit(updateUser)}
-          component="form"
-          sx={{ flexGrow: 1 }}
-          noValidate
-          autoComplete="off"
-        >
-          <Grid container spacing={2} padding={3}>
-            <Grid item lg={4} md={6} xs={12}>
-              <div className="adjust-grid">
-                <label htmlFor="name" className="form-label">
-                  Nome Completo:
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  {...register("name")}
-                  placeholder="Digite seu nome"
-                />
-                <p className="error-message">{errors.name?.message}</p>
-              </div>
-            </Grid>
-            <Grid item lg={4} md={6} xs={12}>
-              <div className="adjust-grid">
-                <label htmlFor="name" className="form-label">
-                  Data de Nascimento:
-                </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="name"
-                  {...register("birthday")}
-                />
-                <p className="error-message">{errors.birthday?.message}</p>
-              </div>
-            </Grid>
-
-            <Grid container spacing={2} padding={3}>
-              <Grid item lg={4} md={6} xs={12}>
-                <div className="adjust-grid">
-                  <label htmlFor="name" className="form-label">
-                    CEP
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="name"
-                    {...register("cep")}
-                  />
-                  <p className="error-message">{errors.birthday?.message}</p>
-                </div>
-              </Grid>
-              <Grid item lg={4} md={6} xs={12}>
-                <div className="adjust-grid">
-                  <label htmlFor="name" className="form-label">
-                    Rua
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="adress"
-                    {...register("address")}
-                  />
-                  <p className="error-message">{errors.address?.message}</p>
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Stack spacing={2} direction="row">
-            <Button type="submit" variant="contained">
-              Salvar
-            </Button>
-            <Link to="/users">
-              <Button variant="contained" color="secondary">
-                Cancelar
-              </Button>
+        <table>
+          <tr>
+            <td className="index-info">Nome do Usuário:</td>{" "}
+            <td>
+              <strong>{userInfo.name}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td className="index-info">E-mail:</td>{" "}
+            <td>
+              <strong>{userInfo.email}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td className="index-info">CPF:</td>{" "}
+            <td>
+              <strong>{!userInfo.cpf ? "Não definido" : userInfo.cpf}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td className="index-info">Data de nascimento:</td>{" "}
+            <td>
+              <strong>
+                {!userInfo.birthday ? "Não definido" : userInfo.birthday}
+              </strong>
+            </td>
+          </tr>
+          <tr>
+            <td className="index-info">Endereço:</td>{" "}
+            <td>
+              <strong>
+                {!userInfo.address ? "Não definido" : userInfo.address}
+              </strong>
+            </td>
+          </tr>
+          <tr>
+            <td className="index-info">CEP:</td>{" "}
+            <td>
+              <strong>{!userInfo.cep ? "Não definido" : userInfo.cep}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td className="index-info">Cidade:</td>{" "}
+            <td>
+              <strong>{!userInfo.city ? "Não definido" : userInfo.city}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td className="index-info">Estado:</td>{" "}
+            <td>
+              <strong>
+                {!userInfo.country ? "Não definido" : userInfo.country}
+              </strong>
+            </td>
+          </tr>
+        </table>
+        <div className="d-flex gap-2 align-items-center justify-content-between m-2">
+          <Link to={`/user/updateUser/${id}`}>
+            <Button className="bg-primary text-white">Atualizar dados</Button>
+          </Link>
+          <div className="d-flex gap-4 p-2 bg-light rounded">
+            <Link to={"/updatePassword"}>
+              <Button className="bg-warning text-white">Alterar a senha</Button>
             </Link>
-          </Stack>
-        </Box>
+            <Button className="bg-danger text-white" onClick={handleOpen}>
+              {" "}
+              Excluir a conta
+            </Button>
+          </div>
+        </div>
       </Paper>
-      <Paper
-        sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1, marginTop: 3 }}
-      >
-        <h1> Configurações</h1>
-        Excluir conta:
-        <button onClick={handleOpen}>Excluir</button>
-      </Paper>
-      <Paper sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1 }}>
-        Alterar Senha:
-        <Link to={"/updatePassword"}>
-          <button>Alterar</button>
-        </Link>
-      </Paper>
-
       <ModalConfirm
         action={deleteUser.bind(this, user.id)}
         title="Deseja Excluir sua conta?"
         text={textModal}
         setOpen={open}
         setClose={handleClose}
-        infoOne= "Excluir a conta"
+        infoOne="Excluir a conta"
       />
     </>
   );

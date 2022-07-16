@@ -8,8 +8,6 @@ import { Box, Grid, Paper, TextField, Card, CardContent, Typography } from "@mui
 
 /*imports CSS */
 import "../styles/alert.scss";
-import "../styles/ResetPassword.scss";
-import "../styles/Register.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 /*imports Libs */

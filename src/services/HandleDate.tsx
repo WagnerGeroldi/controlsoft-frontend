@@ -1,7 +1,8 @@
 export function HandleDate(date: Date) {
 
-
-    const lastAcess = ("0" + date.getDate()).slice(-2) +
+    
+  const lastAcess =
+    ("0" + date.getDate()).slice(-2) +
     "/" +
     ("0" + (date.getMonth() + 1)).slice(-2) +
     "/" +
@@ -11,10 +12,5 @@ export function HandleDate(date: Date) {
     ":" +
     ("0" + date.getMinutes()).slice(-2);
 
-
-    return(
-        <>
-        {lastAcess}
-        </>
-    )
+  return <>{lastAcess}</>;
 }
