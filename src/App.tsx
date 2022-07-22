@@ -20,8 +20,6 @@ import { NewSale } from "./pages/Sale/NewSale";
 import { UpdateProduct } from "./pages/Products/UpdateProduct";
 import { SaleDetails } from "./pages/Sale/SaleDetails";
 
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -35,18 +33,14 @@ function App() {
         <Route path="/resetPassword" element={<ResetPassword />} />
         <Route path="/user/config/:id" element={<ConfigPage />} />
         <Route path="/user/updateUser/:id" element={<UpdateUser />} />
-
         <Route path="/clients/:id" element={<Clients />} />
         <Route path="/clients/createClient/:id" element={<CreateClient />} />
         <Route path="/clients/updateClient/:id" element={<UpdateClient />} />
-
         <Route path="/products/:id" element={<Products />} />
         <Route path="/products/createProduct/:id" element={<CreateProduct />} />
         <Route path="/products/updateProduct/:id" element={<UpdateProduct />} />
-
-
         <Route path="/sale/newSale/:id" element={<NewSale />} />
-        <Route path="/sale/saleDetail/:id" element={<SaleDetails />} /> 
+        <Route path="/sale/saleDetail/:id" element={<SaleDetails />} />
         NewSale
       </Routes>
     </BrowserRouter>
