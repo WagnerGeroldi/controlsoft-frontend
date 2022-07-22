@@ -30,6 +30,8 @@ import "react-toastify/dist/ReactToastify.css";
 /* Imports Extras */
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
+import { Header } from "../partials/Header";
+import { Head } from "../partials/Head";
 
 /*Interface*/
 interface IClientRegister {
@@ -123,6 +125,8 @@ export function CreateClient() {
 
   return (
     <>
+      <Head title="ControlSoft - Cadastrar Cliente" />
+      <Header />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />
@@ -265,8 +269,7 @@ export function CreateClient() {
                       value={!viaCep.uf ? "" : viaCep.uf}
                       placeholder="Rio Grande do Sul"
                       variant="outlined"
-                    >
-                    </TextField>
+                    ></TextField>
                     <p className="error-message">{errors.country?.message}</p>
                   </Grid>
                 </Grid>

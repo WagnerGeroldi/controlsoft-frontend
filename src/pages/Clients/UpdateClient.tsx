@@ -30,7 +30,9 @@ import "react-toastify/dist/ReactToastify.css";
 /* Imports Extras */
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
-import {getUserLocalStorage} from "../../state/SaveLocalStorage"
+import { getUserLocalStorage } from "../../state/SaveLocalStorage";
+import { Head } from "../partials/Head";
+import { Header } from "../partials/Header";
 
 /*Interface*/
 interface IClient {
@@ -52,7 +54,7 @@ const validationRegistrerUser = yup.object().shape({
     .string()
     .required("O CPF é obrigatório")
     .min(11, "CPF deve ter 11 dígitos"),
-    phone: yup.string().required("Telefone é obrigatório"),
+  phone: yup.string().required("Telefone é obrigatório"),
   birthday: yup.string().required("Data de nascimento é obrigatório"),
   address: yup.string().required("Endereço é obrigatório"),
   cep: yup.string().required("CEP é obrigatório"),
@@ -68,7 +70,7 @@ export function UpdateClient() {
   const [birthday, setBirthday] = useState("");
   const [phone, setPhone] = useState("");
   const [cep, setCep] = useState("");
-  const user = getUserLocalStorage()
+  const user = getUserLocalStorage();
 
   /*funcoes*/
 
@@ -97,14 +99,11 @@ export function UpdateClient() {
 
   useEffect(() => {
     api.get("/clients/details/" + id).then((res) => {
-      reset(res.data);      
-
+      reset(res.data);
     });
   }, []);
 
-
   const updateClient = (data: IClient) =>
-  
     api
       .put(`/clients/${id}`, data)
       .then((res) => {
@@ -120,9 +119,10 @@ export function UpdateClient() {
         toast.error(message);
       });
 
-
   return (
     <>
+      <Head title="ControlSoft - Editar Cliente" />
+      <Header />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />
@@ -132,9 +132,7 @@ export function UpdateClient() {
               Atualização de Cliente
             </Typography>
             <br />
-            <p>
-              Atualize os dados de seu cliente!
-            </p>
+            <p>Atualize os dados de seu cliente!</p>
             <Paper sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1 }}>
               <Box
                 onSubmit={handleSubmit(updateClient)}
@@ -286,7 +284,7 @@ export function UpdateClient() {
                       InputLabelProps={{
                         shrink: true,
                       }}
-                   />
+                    />
                     <p className="error-message">{errors.country?.message}</p>
                   </Grid>
                 </Grid>

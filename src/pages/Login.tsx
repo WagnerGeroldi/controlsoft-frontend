@@ -34,6 +34,7 @@ import {
 
 /*import componentes */
 import { ButtonDefault } from "../components/Button";
+import { Head } from "./partials/Head";
 
 interface IUser {
   email: string;
@@ -109,6 +110,7 @@ export function Login() {
 
   return (
     <>
+      <Head title="ControlSoft - Fazer Login" />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />

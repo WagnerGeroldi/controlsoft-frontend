@@ -4,7 +4,15 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 /* Imports MUI */
-import { Box, Grid, Paper, TextField, Card, CardContent, Typography  } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Paper,
+  TextField,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
 
 /* Imports Libs */
 import * as yup from "yup";
@@ -20,6 +28,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
 import { setUserLocalStorage } from "../../state/SaveLocalStorage";
+import { Head } from "../partials/Head";
 
 /*Interface*/
 interface IUserRegister {
@@ -30,7 +39,10 @@ interface IUserRegister {
 /* Validações */
 const validationRegistrerUser = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
-  email: yup.string().required("O email é obrigatório").email("Digite um email válido"),
+  email: yup
+    .string()
+    .required("O email é obrigatório")
+    .email("Digite um email válido"),
 });
 
 export function Register() {
@@ -66,6 +78,7 @@ export function Register() {
 
   return (
     <>
+      <Head title="ControlSoft - Faça seu cadastro" />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />

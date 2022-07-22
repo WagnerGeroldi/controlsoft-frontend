@@ -9,11 +9,14 @@ import "../styles/InfoCreatedAccount.scss";
 /* Imports extras */
 import { ButtonUnique } from "../../components/ButtonUnique";
 import { getUserLocalStorage } from "../../state/SaveLocalStorage";
+import { Head } from "../partials/Head";
 
 export function InfoCreatedAccount() {
   const user = getUserLocalStorage();
   return (
     <>
+      <Head title="ControlSoft - Conta Criada com sucesso" />
+
       <div className="container">
         <Card sx={{ maxWidth: 875, margin: 5 }}>
           <CardContent>

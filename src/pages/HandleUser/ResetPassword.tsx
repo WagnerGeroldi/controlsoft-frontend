@@ -18,6 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 /*imports extras */
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
+import { Head } from "../partials/Head";
 
 /*interface*/
 
@@ -66,6 +67,9 @@ export function ResetPassword() {
 
   return (
     <>
+      <Head
+    title= "ControlSoft - Reset de Senha"
+    />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />

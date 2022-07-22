@@ -18,6 +18,7 @@ import { CreateProduct } from "./pages/Products/CreateProduct";
 import { UpdateUser } from "./pages/HandleUser/UpdateUser";
 import { NewSale } from "./pages/Sale/NewSale";
 import { UpdateProduct } from "./pages/Products/UpdateProduct";
+import { SaleDetails } from "./pages/Sale/SaleDetails";
 
 
 
@@ -45,6 +46,7 @@ function App() {
 
 
         <Route path="/sale/newSale/:id" element={<NewSale />} />
+        <Route path="/sale/saleDetail/:id" element={<SaleDetails />} /> 
         NewSale
       </Routes>
     </BrowserRouter>

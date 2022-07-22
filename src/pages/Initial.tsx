@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import "../pages/styles/Initial.scss";
 
-import video from "../assets/videos/video1.mp4"
-
 /*imports MUI */
 
 import { Box, Container, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
+import { Head } from "./partials/Head";
 
 export function Initial() {
   return (
     <>
+      <Head title="ControlSoft - Controle de Clientes" />
       <header className="header-initial">
         <div>
           <span className="color-c">Control</span>
@@ -19,14 +19,12 @@ export function Initial() {
         </div>
       </header>
       <div className="header-client">
-        <p>
-          Ja é usuário?
-        </p>
+        <p>Ja é usuário?</p>
         <Link to="/login">
-            <Button variant="contained" color="primary">
-              Clique para fazer login
-            </Button>
-          </Link>
+          <Button variant="contained" color="primary">
+            Clique para fazer login
+          </Button>
+        </Link>
       </div>
       <Container maxWidth="lg">
         <Box sx={{ height: "100%" }}>
@@ -49,7 +47,6 @@ export function Initial() {
             <Grid item sm={6} xs={12}>
               <div className="box-content">
                 aqui vai um vídeo do sistema funcionando <br />
-                <video src={video} width= {250} />
               </div>
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -81,7 +78,7 @@ export function Initial() {
       </Container>
 
       <footer className="footer-initial">
-MAPA DO SITE, LINKS... ACESSOS, INFORMAÇÕES DA EMPRESA E TAL
+        MAPA DO SITE, LINKS... ACESSOS, INFORMAÇÕES DA EMPRESA E TAL
       </footer>
     </>
   );

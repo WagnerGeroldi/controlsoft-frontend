@@ -14,7 +14,7 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+
 
 /* Imports Libs */
 import * as yup from "yup";
@@ -31,17 +31,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
 import {
-  getTokenLocalStorage,
   getUserLocalStorage,
-  setUserLocalStorage,
 } from "../../state/SaveLocalStorage";
+import { Head } from "../partials/Head";
+import {HandleOnlyDate} from "../../services/HandleOnlyDate"
 
 /*Interface*/
 interface IUser {
   name: string;
   description: string;
-  quantity: string;
-  value: string;
+  quantity: number;
+  price: number;
   createdAt: string;
 }
 
@@ -49,8 +49,8 @@ interface IUser {
 const validationRegistrerUser = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
   description: yup.string(),
-  quantity: yup.string().required("A quantidade é obrigatória"),
-  value: yup.string().required("O valor é obrigatório"),
+  quantity: yup.number().required("A quantidade é obrigatória"),
+  price: yup.number().required("O valor é obrigatório"),
 });
 
 export function UpdateProduct() {
@@ -60,12 +60,13 @@ export function UpdateProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams() as { id: string };
   const [price, setPrice] = useState();
+  const [productData, setProductData] = useState([] as any)
 
   /*funcoes*/
 
 
   const onChangePrice = (e: any) => {
-    setPrice(mask(e.target.value, ["9,999","99,999", "999,999", "9.999,999", "99.999,99", "999.999,99"]));
+    setPrice(mask(e.target.value, ["9.999", "99.999", "999.999", "9999.999"]));
   };
 
 
@@ -85,7 +86,8 @@ export function UpdateProduct() {
     api
       .get(`/products/details/${id}`)
       .then((res) => {
-        reset(res.data);
+        reset(res.data)
+        setProductData(res.data)
       });
   }, []);
 
@@ -107,6 +109,9 @@ export function UpdateProduct() {
     
   return (
     <>
+      <Head
+    title= "ControlSoft - Atualizar Produto"
+    />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />
@@ -116,7 +121,13 @@ export function UpdateProduct() {
               Atualizar produto
             </Typography>
             <br />
+            <div className="d-flex justify-content-between align-items-center p-2">
             <p>Atualize os dados do produto!</p>
+            <p>
+              Data do cadastro: <strong> {HandleOnlyDate( new Date(productData.createdAt))}</strong>
+            </p>
+
+            </div>
             <Paper sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1 }}>
               <Box
                 onSubmit={handleSubmit(updateProduct)}
@@ -140,20 +151,6 @@ export function UpdateProduct() {
                       }}
                     />
                     <p className="error-message">{errors.name?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="createdAt"
-                      label="Data do Cadastro"
-                      {...register("createdAt")}
-                      variant="outlined"
-                      fullWidth
-                      disabled
-                      size="small"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
                     <TextField
@@ -186,8 +183,8 @@ export function UpdateProduct() {
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
                     <TextField
-                      id="value"
-                      {...register("value")}
+                      id="price"
+                      {...register("price")}
                       label="Preço"
                       onChange={onChangePrice}
                       value={price}
@@ -199,7 +196,7 @@ export function UpdateProduct() {
                         shrink: true,
                       }}
                     />
-                    <p className="error-message">{errors.value?.message}</p>
+                    <p className="error-message">{errors.price?.message}</p>
                   </Grid>
                 </Grid>
                 <ButtonDefault

@@ -29,13 +29,15 @@ import "react-toastify/dist/ReactToastify.css";
 /* Imports Extras */
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
+import { Header } from "../partials/Header";
+import { Head } from "../partials/Head";
 
 /*Interface*/
 interface IProductRegister {
   name: string;
   description: string;
   quantity: string;
-  value: string;
+  price: string;
 }
 
 /* Validações */
@@ -43,7 +45,7 @@ const validationRegistrerUser = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
   description: yup.string(),
   quantity: yup.string().required("Quantidade é obrigatório"),
-  value: yup.string().required("Valor é obrigatório"),
+  price: yup.number().required("Valor é obrigatório"),
 });
 
 export function CreateProduct() {
@@ -55,7 +57,7 @@ export function CreateProduct() {
   /*funcoes*/
 
   const onChangeValue = (e: any) => {
-    setValue(mask( e.target.value, ["9,999","99,999", "999,999", "9.999,999", "99.999,99", "999.999,99"]));
+    setValue(mask(e.target.value, ["9.999", "99.999", "999.999", "9999.999"]));
   };
 
   /*lidar com formulário */
@@ -88,6 +90,10 @@ export function CreateProduct() {
 
   return (
     <>
+      <Head
+    title= "ControlSoft - Criar Produto"
+    />
+    <Header />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />
@@ -135,8 +141,8 @@ export function CreateProduct() {
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
                     <TextField
-                      id="value"
-                      {...register("value")}
+                      id="price"
+                      {...register("price")}
                       label="Valor"
                       onChange={onChangeValue}
                       value={value}
@@ -145,7 +151,7 @@ export function CreateProduct() {
                       placeholder="R$ 9,99"
                       size="small"
                     />
-                    <p className="error-message">{errors.value?.message}</p>
+                    <p className="error-message">{errors.price?.message}</p>
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
                     <TextField

@@ -36,6 +36,8 @@ import { getUserLocalStorage } from "../../state/SaveLocalStorage";
 import { ModalCancelSale } from "../../components/Modals/ModalCancelSale";
 import { ModalConfirm } from "../../components/Modals/ModalConfirm";
 import { ModalClearList } from "../../components/Modals/ModalClearList";
+import { Header } from "../partials/Header";
+import { Head } from "../partials/Head";
 
 /* Validações */
 const validationRegistrerUser = yup.object().shape({
@@ -91,11 +93,13 @@ export function NewSale() {
 
   const [open, setOpen] = useState(false);
   const [openModalClearList, setOpenModalClearList] = useState(false);
+  const [openModalRegisterSale, setOpenModalRegisterSale] = useState(false);
   const [openModalCancelSale, setOpenModalCancelSale] = useState(false);
 
   const handleClose = () => setOpen(false);
   const handleCloseModalClearList = () => setOpenModalClearList(false);
   const handleCloseModalCancelSale = () => setOpenModalCancelSale(false);
+  const handleCloseModalRegisterSale = () => setOpenModalRegisterSale(false);
 
   const handleClickOpen = (id: any) => {
     setCaptureIdItem(id);
@@ -110,6 +114,11 @@ export function NewSale() {
   const handleClickOpenModalCancelSale = (id: any) => {
     setCaptureIdClient(id);
     setOpenModalCancelSale(true);
+  };
+
+  const handleClickOpenModalRegisterSale = (id: any) => {
+    setCaptureIdClient(id);
+    setOpenModalRegisterSale(true);
   };
 
   /*lidar com formulário */
@@ -151,9 +160,9 @@ export function NewSale() {
       });
   }, []);
 
-  const registerSale = (data: any) =>
+  const registerSale = () => {
     api
-      .post(`/sales/${id}`, data)
+      .post(`/sale/${id}`, order, user.id)
       .then((res) => {
         setIsLoading(true);
         toast.success(res.data.message);
@@ -166,6 +175,7 @@ export function NewSale() {
           error.response.data.message || error.response.data.errors[0].msg;
         toast.error(message);
       });
+  }
 
   const addItem = (data: any) =>
     api
@@ -188,13 +198,14 @@ export function NewSale() {
         toast.success(message);
         setOrder([]);
       })
-      .catch((error) => {        
-        switch(error.response.status) {
-          case 404: toast.error(error.response.data.message)
-          break
-          default:  toast.error("Houve um erro, tente novamente");
+      .catch((error) => {
+        switch (error.response.status) {
+          case 404:
+            toast.error(error.response.data.message);
+            break;
+          default:
+            toast.error("Houve um erro, tente novamente");
         }
-       
       });
 
     handleCloseModalClearList();
@@ -218,6 +229,10 @@ export function NewSale() {
 
   return (
     <>
+      <Head
+    title= "ControlSoft - Nova Venda"
+    />
+    <Header />
       <div className="container">
         <Card sx={{ maxWidth: 1100 }}>
           <ToastContainer />
@@ -309,6 +324,7 @@ export function NewSale() {
               <table className="w-100 mb-5 text-center table-map">
                 <tr>
                   <td>Produto</td>
+                  <td>Preço Unitário</td>
                   <td>Quantidade</td>
                   <td>Total</td>
                   <td>Excluir</td>
@@ -316,8 +332,9 @@ export function NewSale() {
                 {order.map((item: any) => (
                   <tr key={item.id}>
                     <td>{item.product}</td>
+                    <td>R$ {item.price.toFixed(2)}</td>
                     <td>{item.quantity}</td>
-                    <td>Total</td>
+                    <td>R$ {item.total.toFixed(2)}</td>
                     <td>
                       <DeleteIcon
                         className="icon-delete"
@@ -325,10 +342,9 @@ export function NewSale() {
                       />
                     </td>
                   </tr>
-                ))}
+                  ))}                
               </table>
               <Box
-                onSubmit={handleSubmit(registerSale)}
                 component="form"
                 sx={{ flexGrow: 1 }}
                 noValidate
@@ -337,7 +353,7 @@ export function NewSale() {
                 <Grid container spacing={2}></Grid>
                 <div className="d-flex align-items-center justify-content-between">
                   <Button
-                    // onClick={() => handleClickOpenModalClearList(id)}
+                    onClick={() => handleClickOpenModalRegisterSale(id)}
                     variant="contained"
                     color="primary"
                   >
@@ -387,6 +403,15 @@ export function NewSale() {
         link={`/clients/${user.id}`}
         setClose={handleCloseModalCancelSale}
         infoOne="Continuar"
+      />
+
+      <ModalCancelSale
+        action={registerSale}
+        title="Confirmar venda?"
+        setOpen={openModalRegisterSale}
+        link={`/clients/${user.id}`}
+        setClose={handleCloseModalRegisterSale}
+        infoOne="REGISTRAR"
       />
     </>
   );

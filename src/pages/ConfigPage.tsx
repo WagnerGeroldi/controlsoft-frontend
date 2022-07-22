@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 /*imports MUI */
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
+import { Head } from "./partials/Head";
 
 export function ConfigPage() {
   const [userInfo, setUserInfo] = useState({} as any);
@@ -78,6 +79,7 @@ export function ConfigPage() {
 
   return (
     <>
+      <Head title="ControlSoft - Configurações do Usuário" />
       <Header />
       <ToastContainer />
       <Paper

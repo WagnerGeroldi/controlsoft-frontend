@@ -35,6 +35,7 @@ import {
   getUserLocalStorage,
   setUserLocalStorage,
 } from "../../state/SaveLocalStorage";
+import { Head } from "../partials/Head";
 
 /*Interface*/
 interface IUser {
@@ -150,6 +151,9 @@ export function UpdateUser() {
     
   return (
     <>
+      <Head
+    title= "ControlSoft - Atualizar Usuário"
+    />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />

@@ -9,11 +9,11 @@ import DataTable from "react-data-table-component";
 /*imports extras */
 import { api } from "../../api/api";
 import { Header } from "../partials/Header";
-import { getUserLocalStorage } from "../../state/SaveLocalStorage";
 
 /*imports styles CSS */
 
 import "react-toastify/dist/ReactToastify.css";
+import "./Products.scss"
 
 /*imports MUI */
 import Paper from "@mui/material/Paper";
@@ -22,6 +22,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import { ModalConfirm } from "../../components/Modals/ModalConfirm";
+import { Head } from "../partials/Head";
+
+import {HandleOnlyDate} from "../../services/HandleOnlyDate"
 
 const FilterComponent = ({ filterText, onFilter, onClear }: any) => (
   <>
@@ -43,7 +46,6 @@ const textModal = "Deseja apagar este produto?";
 
 export function Products(this: any) {
   const { id } = useParams() as { id: string };
-  const { user, token } = getUserLocalStorage();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
 
@@ -131,12 +133,17 @@ export function Products(this: any) {
       },
       {
         name: "Valor",
-        selector: (row: any) => row.value,
+        selector: (row: any) => `R$  ${row.price.toFixed(2)}`,
         sortable: true,
       },
       {
         name: "Estoque",
         selector: (row: any) => row.quantity,
+        sortable: true,
+      },
+      {
+        name: "Cadastro",
+        selector: (row: any) => HandleOnlyDate(new Date(row.createdAt)),
         sortable: true,
       },
       {
@@ -171,6 +178,9 @@ export function Products(this: any) {
 
     return (
       <>
+        <Head
+    title= "ControlSoft - Produtos"
+    />
         <Header />
         <ToastContainer />
 

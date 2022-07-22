@@ -33,6 +33,7 @@ import { api } from "../../api/api";
 /*import de componentes */
 import { ButtonSubmit } from "../../components/ButtonSubmit";
 import { ModalInfo } from "../../components/Modals/ModalInfo";
+import { Head } from "../partials/Head";
 
 interface IPassword {
   password: string;
@@ -96,6 +97,7 @@ export function UpdatePassword() {
 
   return (
     <>
+      <Head title="ControlSoft - Atualizar Senha" />
       <div className="container">
         <Card sx={{ maxWidth: 475 }}>
           <ToastContainer />
