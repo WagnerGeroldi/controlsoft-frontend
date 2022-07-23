@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getUserLocalStorage } from "../state/SaveLocalStorage";
 
-const baseURL = "https://controlsoft-node.herokuapp.com/";
+const baseURL = "http://localhost:3333/";
 
 const api = axios.create({
   baseURL: baseURL,
@@ -12,9 +12,9 @@ const api = axios.create({
 
 const user = getUserLocalStorage();
 
-if (user) {
-  api.defaults.headers.common["x-access-token"] = user.token;
-}
+// if (user) {
+//   api.defaults.headers.common["x-access-token"] = user.token;
+// }
 
 export { api };
 
