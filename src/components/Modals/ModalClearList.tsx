@@ -5,10 +5,9 @@ import { Modal, Backdrop, Fade, Box, Typography, Button } from "@mui/material";
 import "../styles/ModalConfirm.scss";
 
 /*imports Estilo Modal */
-import { styleModal } from "./StyleModal"
+import { styleModal } from "./StyleModal";
 
 function ModalClearList(props: any) {
-
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -34,7 +33,9 @@ function ModalClearList(props: any) {
             {props.text}
           </Typography>
           <div className="line-button">
-            <Button onClick={props.action} variant="contained" color="primary">{props.infoOne}</Button>
+            <Button onClick={props.action} variant="contained" color="primary">
+              {props.infoOne}
+            </Button>
             <Button onClick={() => props.setClose(false)}>Cancelar</Button>
           </div>
         </Box>

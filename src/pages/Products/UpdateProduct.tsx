@@ -13,6 +13,7 @@ import {
   Card,
   CardContent,
   Typography,
+  MenuItem,
 } from "@mui/material";
 
 
@@ -20,7 +21,6 @@ import {
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { mask } from "remask";
 
 /* Imports CSS */
 import "../styles/alert.scss";
@@ -31,6 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
 import {
+  getTokenLocalStorage,
   getUserLocalStorage,
 } from "../../state/SaveLocalStorage";
 import { Head } from "../partials/Head";
@@ -41,7 +42,7 @@ interface IUser {
   name: string;
   description: string;
   quantity: number;
-  price: number;
+  category: string;
   createdAt: string;
 }
 
@@ -49,26 +50,20 @@ interface IUser {
 const validationRegistrerUser = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
   description: yup.string(),
-  quantity: yup.number().required("A quantidade é obrigatória"),
-  price: yup.number().required("O valor é obrigatório"),
+  quantity: yup.string().required("A quantidade é obrigatória"),
+  category: yup.string().required("A categoria é obrigatória"),
 });
 
 export function UpdateProduct() {
-
+  const token = getTokenLocalStorage();
   const user = getUserLocalStorage();
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams() as { id: string };
-  const [price, setPrice] = useState();
   const [productData, setProductData] = useState([] as any)
+  const [values, setValues] = useState([] as any);
 
-  /*funcoes*/
-
-
-  const onChangePrice = (e: any) => {
-    setPrice(mask(e.target.value, ["9.999", "99.999", "999.999", "9999.999"]));
-  };
-
+  const userID = getUserLocalStorage()
 
   /*lidar com formulário */
   const {
@@ -84,16 +79,62 @@ export function UpdateProduct() {
 
   useEffect(() => {
     api
-      .get(`/products/details/${id}`)
+      .get(`/products/details/${id}`, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
       .then((res) => {
         reset(res.data)
         setProductData(res.data)
+      }).catch((err) => {
+        switch (err.response.status) {
+          case 401:
+            toast.error(
+              err.response.data.message + "\n Redirecionando para login..."
+            );
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(err.response.data.message);
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    api
+      .get(`/category/${userID.id}`, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
+      .then((res) => {
+        setValues(res.data)
+      }).catch((err) => {
+        switch (err.response.status) {
+          case 401:
+            toast.error(
+              err.response.data.message + "\n Redirecionando para login..."
+            );
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(err.response.data.message);
+        }
       });
   }, []);
 
   const updateProduct = (data: IUser) =>
     api
-      .put(`/products/${id}`, data)
+      .put(`/products/${id}`, data, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
       .then((res) => {
         setIsLoading(true);
         toast.success(res.data.message);
@@ -104,13 +145,24 @@ export function UpdateProduct() {
       .catch((error) => {
         const message =
           error.response.data.message || error.response.data.errors[0].msg;
-        toast.error(message);
+          switch (error.response.status) {
+            case 401:
+              toast.error(
+                message + "\n Redirecionando para login..."
+              );
+              setTimeout(() => {
+                navigate("/login");
+              }, 4000);
+              break;
+            default:
+              toast.error(message);
+          }
       });
     
   return (
     <>
       <Head
-    title= "ControlSoft - Atualizar Produto"
+    title= "Rede Unisoft - Atualizar Produto"
     />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
@@ -183,20 +235,25 @@ export function UpdateProduct() {
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
                     <TextField
-                      id="price"
-                      {...register("price")}
-                      label="Preço"
-                      onChange={onChangePrice}
-                      value={price}
-                      variant="outlined"
-                      fullWidth
-                      placeholder="Exe: 10,00"
+                      id="category"
+                      {...register("category")}
+                      label="Categoria"
                       size="small"
+                      fullWidth
+                      placeholder="exe: 10"
+                      variant="outlined"
+                      select
                       InputLabelProps={{
                         shrink: true,
                       }}
-                    />
-                    <p className="error-message">{errors.price?.message}</p>
+                    >
+                      {values.map((item: any) => (
+                        <MenuItem key={item.id} value={item.name}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                      </TextField>
+                    <p className="error-message">{errors.category?.message}</p>
                   </Grid>
                 </Grid>
                 <ButtonDefault

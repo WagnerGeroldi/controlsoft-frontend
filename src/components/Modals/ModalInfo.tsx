@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Modal, Backdrop, Fade, Box, Typography, Button } from "@mui/material";
 
 /*imports CSS */
-import "../styles/ModalInfo.scss"
+import "../styles/ModalInfo.scss";
 
 /*imports Estilo Modal */
 import { styleModal } from "./StyleModal";
@@ -28,12 +28,16 @@ function ModalInfo(props: any) {
           <Typography id="transition-modal-title" variant="h6" component="h2">
             {props.title}
           </Typography>
-          <Typography id="transition-modal-description" sx={{ mt: 2 }} textAlign={"justify"}>
+          <Typography
+            id="transition-modal-description"
+            sx={{ mt: 2 }}
+            textAlign={"justify"}
+          >
             {props.text}
           </Typography>
           <div className="line-button">
             <Link to={props.link}>
-              <Button>Sair mesmo assim</Button>  
+              <Button>Sair mesmo assim</Button>
             </Link>
           </div>
         </Box>

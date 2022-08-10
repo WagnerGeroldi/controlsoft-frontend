@@ -16,11 +16,10 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import InventoryIcon from "@mui/icons-material/Inventory";
-
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
 /*imports CSS */
 import "./Header.scss";
 
@@ -80,16 +79,6 @@ export function Header(this: any) {
             </ListItemIcon>
             <ListItemText>Início</ListItemText>
           </ListItem>
-
-          <ListItem
-            button
-            onClick={() => handleMenuClick(`/clients/${user.id}`)}
-          >
-            <ListItemIcon>
-              <PeopleAltIcon />
-            </ListItemIcon>
-            <ListItemText>Clientes</ListItemText>
-          </ListItem>
           <ListItem
             button
             onClick={() => handleMenuClick(`/products/${user.id}`)}
@@ -97,15 +86,26 @@ export function Header(this: any) {
             <ListItemIcon>
               <InventoryIcon />
             </ListItemIcon>
-            <ListItemText>Produtos</ListItemText>
+            <ListItemText>Lista de Produtos</ListItemText>
           </ListItem>
-          <ListItem button onClick={() => handleMenuClick("/finances")}>
+
+          <ListItem
+            button
+            onClick={() => handleMenuClick(`/category/${user.id}`)}
+          >
             <ListItemIcon>
-              <AttachMoneyIcon />
+              <BookmarksIcon />
             </ListItemIcon>
-            <ListItemText>Financeiro</ListItemText>
+            <ListItemText>Categorias</ListItemText>
           </ListItem>
-          <ListItem button onClick={() => handleMenuClick("/report")}>
+
+          <ListItem button onClick={() => handleMenuClick(`/order/newDecreaseOrder/${user.id}`)}>
+            <ListItemIcon>
+              <ArrowDropDownCircleIcon />
+            </ListItemIcon>
+            <ListItemText>Baixar produtos</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => handleMenuClick(`/report/${user.id}`)}>
             <ListItemIcon>
               <LocalPrintshopIcon />
             </ListItemIcon>
@@ -135,12 +135,12 @@ export function Header(this: any) {
             <MenuIcon />
           </IconButton>
           <Link to={`/dashboard/${user.id}`}>
-            <img src={logo} alt="LOGO" width={85} />
+            <img src={logo} alt="LOGO" width={55} />
           </Link>
           <div className="area-logo-text">
-            <span>Control Soft</span>
+            <span>Rede Unisoft</span>
             <div>
-              <small>Controle de Clientes</small>
+              <small>Controle de Estoque</small>
             </div>
           </div>
         </div>

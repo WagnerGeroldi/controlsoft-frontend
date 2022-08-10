@@ -27,7 +27,10 @@ import "../styles/Register.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 /* imports extras */
-import { getUserLocalStorage } from "../../state/SaveLocalStorage";
+import {
+  getTokenLocalStorage,
+  getUserLocalStorage,
+} from "../../state/SaveLocalStorage";
 import { api } from "../../api/api";
 
 /*import de componentes */
@@ -60,6 +63,7 @@ const validationRegistrerUser = yup.object().shape({
 
 export function UpdatePassword() {
   let navigate = useNavigate();
+  const token = getTokenLocalStorage();
   const [isLoading, setIsLoading] = useState(false);
   const user = getUserLocalStorage();
   const [open, setOpen] = useState(false);
@@ -80,7 +84,15 @@ export function UpdatePassword() {
 
   const updatePassword = (data: IPassword) =>
     api
-      .post("/users/updatePassword", { data, user })
+      .post(
+        "/users/updatePassword",
+        { data, user },
+        {
+          headers: {
+            "x-access-token": token,
+          },
+        }
+      )
       .then((res) => {
         setIsLoading(true);
         toast.success(res.data.message);
@@ -88,16 +100,25 @@ export function UpdatePassword() {
           navigate("/dashboard/" + user.id);
         }, 2500);
       })
-      .catch((error) => {
+      .catch((err) => {
         const message =
-          error.response.data.message || error.response.data.errors[0].msg;
+          err.response.data.message || err.response.data.errors[0].msg;
 
-        toast.error(message);
+        switch (err.response.status) {
+          case 401:
+            toast.error(message + "\n Redirecionando para login...");
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(message);
+        }
       });
 
   return (
     <>
-      <Head title="ControlSoft - Atualizar Senha" />
+      <Head title="Rede Unisoft - Atualizar Senha" />
       <div className="container">
         <Card sx={{ maxWidth: 475 }}>
           <ToastContainer />

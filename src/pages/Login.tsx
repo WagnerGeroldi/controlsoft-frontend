@@ -73,7 +73,6 @@ export function Login() {
       .post("/users/validate", data)
       .then((response) => {
         setIsLoading(true);
-
         setTimeout(() => {
           setUserLocalStorage(response.data.user);
           setTokenLocalStorage(response.data.token);
@@ -110,7 +109,8 @@ export function Login() {
 
   return (
     <>
-      <Head title="ControlSoft - Fazer Login" />
+      <Head title="Rede Unisoft - Fazer Login" />
+
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />

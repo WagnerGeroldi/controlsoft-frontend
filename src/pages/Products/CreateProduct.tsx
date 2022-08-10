@@ -1,7 +1,7 @@
 /* Imports REACT */
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /* Imports MUI */
 import {
@@ -31,13 +31,14 @@ import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
 import { Header } from "../partials/Header";
 import { Head } from "../partials/Head";
+import { getTokenLocalStorage, getUserLocalStorage } from "../../state/SaveLocalStorage";
 
 /*Interface*/
 interface IProductRegister {
   name: string;
   description: string;
   quantity: string;
-  price: string;
+  category: string;
 }
 
 /* Validações */
@@ -45,20 +46,16 @@ const validationRegistrerUser = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
   description: yup.string(),
   quantity: yup.string().required("Quantidade é obrigatório"),
-  price: yup.number().required("Valor é obrigatório"),
+  category: yup.object().required("Categoria é obrigatória"),
 });
 
 export function CreateProduct() {
   let navigate = useNavigate();
+  const token = getTokenLocalStorage();
   const [isLoading, setIsLoading] = useState(false);
+  const [values, setValues] = useState([] as any);
   const { id } = useParams() as { id: string };
-  const [value, setValue] = useState("");
 
-  /*funcoes*/
-
-  const onChangeValue = (e: any) => {
-    setValue(mask(e.target.value, ["9.999", "99.999", "999.999", "9999.999"]));
-  };
 
   /*lidar com formulário */
   const {
@@ -72,7 +69,12 @@ export function CreateProduct() {
   /* consulta backend */
   const registerClient = (data: IProductRegister) =>
     api
-      .post(`/products/${id}`, data)
+      .post(`/products/${id}`, data, {
+        headers: {
+          "x-access-token": token,
+        },
+      }
+)
       .then((res) => {
         setIsLoading(true);
         toast.success("Produto cadastrado!");
@@ -80,20 +82,54 @@ export function CreateProduct() {
           navigate("/products/" + id);
         }, 1000);
       })
-      .catch((error) => {
-        console.log(error);
-
+      .catch((err) => {
         const message =
-          error.response.data.message || error.response.data.errors[0].msg;
-        toast.error(message);
+          err.response.data.message || err.response.data.errors[0].msg;
+          switch (err.response.status) {
+            case 401:
+              toast.error(
+                message + "\n Redirecionando para login..."
+              );
+              setTimeout(() => {
+                navigate("/login");
+              }, 4000);
+              break;
+            default:
+              toast.error(message);
+          }
       });
+
+
+      useEffect(() => {
+        api
+          .get(`/category/${id}`, {
+            headers: {
+              "x-access-token": token,
+            },
+          }
+    )
+          .then((res) => {
+            setValues(res.data)            
+          }).catch((err) => {
+            switch (err.response.status) {
+              case 401:
+                toast.error(
+                  err.response.data.message + "\n Redirecionando para login..."
+                );
+                setTimeout(() => {
+                  navigate("/login");
+                }, 4000);
+                break;
+              default:
+                toast.error(err.response.data.message);
+            }
+          });
+      }, []);
 
   return (
     <>
-      <Head
-    title= "ControlSoft - Criar Produto"
-    />
-    <Header />
+      <Head title="Rede Unisoft - Criar Produto" />
+      <Header />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />
@@ -103,7 +139,7 @@ export function CreateProduct() {
               Cadastro de produtos
             </Typography>
             <br />
-            <p>Cadastre seus produtos, depois poderá usá-los em suas vendas!</p>
+            <p>Cadastre o produto!</p>
             <Paper sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1 }}>
               <Box
                 onSubmit={handleSubmit(registerClient)}
@@ -141,20 +177,6 @@ export function CreateProduct() {
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
                     <TextField
-                      id="price"
-                      {...register("price")}
-                      label="Valor"
-                      onChange={onChangeValue}
-                      value={value}
-                      variant="outlined"
-                      fullWidth
-                      placeholder="R$ 9,99"
-                      size="small"
-                    />
-                    <p className="error-message">{errors.price?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
                       id="phone"
                       {...register("quantity")}
                       label="Quantidade"
@@ -165,7 +187,31 @@ export function CreateProduct() {
                     />
                     <p className="error-message">{errors.quantity?.message}</p>
                   </Grid>
+                  <Grid item lg={6} md={6} xs={12}>
+                    <TextField
+                      id="category"
+                      {...register("category")}
+                      label="Categoria"
+                      size="small"
+                      fullWidth
+                      placeholder="exe: 10"
+                      variant="outlined"
+                      select
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    >
+                      {values.map((item: any) => (
+                        <MenuItem key={item.id} value={item}>
+                          {item.name}
+                        </MenuItem>
+
+                      ))}
+                      </TextField>
+                    <p className="error-message">{errors.category?.message}</p>
+                  </Grid>
                 </Grid>
+
                 <ButtonDefault
                   link={`/products/${id}`}
                   contentBtnPrimary={isLoading ? "Aguarde..." : "Cadastrar"}

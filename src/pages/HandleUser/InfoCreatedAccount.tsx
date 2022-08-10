@@ -13,9 +13,10 @@ import { Head } from "../partials/Head";
 
 export function InfoCreatedAccount() {
   const user = getUserLocalStorage();
+
   return (
     <>
-      <Head title="ControlSoft - Conta Criada com sucesso" />
+      <Head title="Rede Unisoft - Conta Criada com sucesso" />
 
       <div className="container">
         <Card sx={{ maxWidth: 875, margin: 5 }}>

@@ -13,6 +13,7 @@ import {
   getUserLocalStorage,
   getTokenLocalStorage,
 } from "../state/SaveLocalStorage";
+import { HandleDate } from "../services/HandleDate";
 
 /*imports styles CSS */
 import "./styles/ConfigPage.scss";
@@ -79,7 +80,7 @@ export function ConfigPage() {
 
   return (
     <>
-      <Head title="ControlSoft - Configurações do Usuário" />
+      <Head title="Rede Unisoft - Configurações do Usuário" />
       <Header />
       <ToastContainer />
       <Paper
@@ -102,44 +103,10 @@ export function ConfigPage() {
             </td>
           </tr>
           <tr>
-            <td className="index-info">CPF:</td>{" "}
-            <td>
-              <strong>{!userInfo.cpf ? "Não definido" : userInfo.cpf}</strong>
-            </td>
-          </tr>
-          <tr>
-            <td className="index-info">Data de nascimento:</td>{" "}
+            <td className="index-info">Data do cadastro:</td>{" "}
             <td>
               <strong>
-                {!userInfo.birthday ? "Não definido" : userInfo.birthday}
-              </strong>
-            </td>
-          </tr>
-          <tr>
-            <td className="index-info">Endereço:</td>{" "}
-            <td>
-              <strong>
-                {!userInfo.address ? "Não definido" : userInfo.address}
-              </strong>
-            </td>
-          </tr>
-          <tr>
-            <td className="index-info">CEP:</td>{" "}
-            <td>
-              <strong>{!userInfo.cep ? "Não definido" : userInfo.cep}</strong>
-            </td>
-          </tr>
-          <tr>
-            <td className="index-info">Cidade:</td>{" "}
-            <td>
-              <strong>{!userInfo.city ? "Não definido" : userInfo.city}</strong>
-            </td>
-          </tr>
-          <tr>
-            <td className="index-info">Estado:</td>{" "}
-            <td>
-              <strong>
-                {!userInfo.country ? "Não definido" : userInfo.country}
+                {!userInfo.createdAt ? "Não definido" : HandleDate(new Date(userInfo.createdAt))}
               </strong>
             </td>
           </tr>

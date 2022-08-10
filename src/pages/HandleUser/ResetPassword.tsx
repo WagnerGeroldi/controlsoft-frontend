@@ -4,7 +4,15 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 /*imports MUI */
-import { Box, Grid, Paper, TextField, Card, CardContent, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Paper,
+  TextField,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
 
 /*imports CSS */
 import "../styles/alert.scss";
@@ -19,6 +27,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
 import { Head } from "../partials/Head";
+import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
 
 /*interface*/
 
@@ -35,9 +44,9 @@ const validationRegistrerUser = yup.object().shape({
 });
 
 export function ResetPassword() {
-
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const token = getTokenLocalStorage();
 
   const {
     register,
@@ -49,45 +58,50 @@ export function ResetPassword() {
 
   const recoverPassword = (data: IResertPassword) =>
     api
-      .post("/users/recoverPassword", data)
+      .post("/users/recoverPassword", data, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
       .then((res) => {
-        setIsLoading(true)
-          toast.success(res.data.message);
+        setIsLoading(true);
+        toast.success(res.data.message);
         setTimeout(() => {
           navigate("/login");
         }, 2500);
       })
-      .catch((error) => {
-        console.log(error)
+      .catch((err) => {
         const message =
-          error.response.data.message || error.response.data.errors[0].msg;
+          err.response.data.message || err.response.data.errors[0].msg;
 
-        toast.error(message);
+        switch (err.response.status) {
+          case 401:
+            toast.error(message + "\n Redirecionando para login...");
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(message);
+        }
       });
 
   return (
     <>
-      <Head
-    title= "ControlSoft - Reset de Senha"
-    />
+      <Head title="Rede Unisoft - Reset de Senha" />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />
           <CardContent>
-            <Typography
-              sx={{ fontSize: 20 }}
-              color="text.primary"
-              gutterBottom
-            >
-             <i className="fa fa-refresh fa-2x" aria-hidden="true"></i> Recuperar senha
+            <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
+              <i className="fa fa-refresh fa-2x" aria-hidden="true"></i>{" "}
+              Recuperar senha
             </Typography>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.primary"
-              gutterBottom
-            >
-              Uma senha provisória será enviada em seu email, use ela para acessar o sistema! <br />
-              Quando acessar o sistema, você será redirecionado para trocar a senha!
+            <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+              Uma senha provisória será enviada em seu email, use ela para
+              acessar o sistema! <br />
+              Quando acessar o sistema, você será redirecionado para trocar a
+              senha!
             </Typography>
             <Paper sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1 }}>
               <Box
@@ -113,7 +127,9 @@ export function ResetPassword() {
                 </Grid>
                 <ButtonDefault
                   link="/login"
-                  contentBtnPrimary= {isLoading ? "Aguarde..." : "Recuperar senha"}
+                  contentBtnPrimary={
+                    isLoading ? "Aguarde..." : "Recuperar senha"
+                  }
                   contentBtnSecondary="Cancelar"
                 />
               </Box>

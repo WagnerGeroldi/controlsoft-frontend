@@ -27,7 +27,10 @@ import "react-toastify/dist/ReactToastify.css";
 /* Imports Extras */
 import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
-import { setUserLocalStorage } from "../../state/SaveLocalStorage";
+import {
+  getTokenLocalStorage,
+  setUserLocalStorage,
+} from "../../state/SaveLocalStorage";
 import { Head } from "../partials/Head";
 
 /*Interface*/
@@ -47,6 +50,7 @@ const validationRegistrerUser = yup.object().shape({
 
 export function Register() {
   let navigate = useNavigate();
+  const token = getTokenLocalStorage();
   const [isLoading, setIsLoading] = useState(false);
 
   /*lidar com formulário */
@@ -61,7 +65,11 @@ export function Register() {
   /* consulta backend */
   const registerUser = (data: IUserRegister) =>
     api
-      .post("/users", data)
+      .post("/users", data, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
       .then((res) => {
         setIsLoading(true);
         toast.success("Usuário cadastrado! Redirecionando");
@@ -70,15 +78,25 @@ export function Register() {
           navigate("/infocreateaccount");
         }, 2000);
       })
-      .catch((error) => {
+      .catch((err) => {
         const message =
-          error.response.data.message || error.response.data.errors[0].msg;
-        toast.error(message);
+          err.response.data.message || err.response.data.errors[0].msg;
+        switch (err.response.status) {
+          case 401:
+            toast.error(message + "\n Redirecionando para login...");
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(message);
+        }
       });
 
   return (
     <>
-      <Head title="ControlSoft - Faça seu cadastro" />
+      <Head title="Rede Unisoft - Faça seu cadastro" />
+
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />

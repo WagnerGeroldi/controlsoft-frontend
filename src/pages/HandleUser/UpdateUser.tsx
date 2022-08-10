@@ -41,28 +41,12 @@ import { Head } from "../partials/Head";
 interface IUser {
   name: string;
   email: string;
-  phone: string;
-  cpf: string;
-  birthday: string;
-  address: string;
-  cep: string;
-  city: string;
-  houseNumber: number;
-  country: string;
 }
 
 /* Validações */
 const validationRegistrerUser = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
   email: yup.string().required("Email é obrigatório"),
-  cpf: yup.string().min(11, "CPF deve ter 11 dígitos"),
-  phone: yup.string(),
-  birthday: yup.string(),
-  address: yup.string(),
-  cep: yup.string(),
-  city: yup.string(),
-  houseNumber: yup.string(),
-  country: yup.string(),
 });
 
 export function UpdateUser() {
@@ -72,27 +56,9 @@ export function UpdateUser() {
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams() as { id: string };
-  const [birthday, setBirthday] = useState(user.birthday);
-  const [phone, setPhone] = useState(user.phone);
-  const [cep, setCep] = useState(user.cep);
-  const [cpf, setCpf] = useState(user.cpf);
   const [viaCep, setViaCep] = useState([] as any);
   /*funcoes*/
 
-  const onChangeBirthday = (e: any) => {
-    setBirthday(mask(e.target.value, ["99/99/9999"]));
-  };
-
-  const onChangePhone = (e: any) => {
-    setPhone(mask(e.target.value, ["99 9 9999-9999"]));
-  };
-  const onChangeCEP = (e: any) => {
-    setCep(mask(e.target.value, ["99999-999"]));
-  };
-
-  const onChangeCpf = (e: any) => {
-    setCpf(mask(e.target.value, ["999.999.999-99"]));
-  };
 
   /*lidar com formulário */
   const {
@@ -139,20 +105,10 @@ export function UpdateUser() {
         toast.error(message);
       });
 
-
-      async function consultacep(cep: string) {
-        let newCEP = cep.replace(/\D/g, "");
-    
-        await fetch(`http://viacep.com.br/ws/${newCEP}/json/`).then((response) => {
-          response.json().then((data) => setViaCep(data));
-        });
-      }
-
-    
   return (
     <>
       <Head
-    title= "ControlSoft - Atualizar Usuário"
+    title= "Rede Unisoft - Atualizar Usuário"
     />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
@@ -205,142 +161,6 @@ export function UpdateUser() {
                     <small className="error-message">
                       O email não pode ser alterado
                     </small>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                      <TextField
-                        id="cpf"
-                        {...register("cpf")}
-                        label="CPF"
-                        size="small"
-                        fullWidth
-                        onChange={onChangeCpf}
-                        value={cpf}
-                        placeholder="000.000.000-00"
-                        variant="outlined"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      />
-
-                    <p className="error-message">{errors.cpf?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="birthday"
-                      {...register("birthday")}
-                      label="Data de nascimento"
-                      onChange={onChangeBirthday}
-                      value={birthday}
-                      variant="outlined"
-                      fullWidth
-                      placeholder="12/12/2000"
-                      size="small"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <p className="error-message">{errors.birthday?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="phone"
-                      {...register("phone")}
-                      label="Telefone"
-                      size="small"
-                      onChange={onChangePhone}
-                      value={phone}
-                      fullWidth
-                      placeholder="(54) 9 9933-3399"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <p className="error-message">{errors.phone?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="address"
-                      {...register("address")}
-                      label="Endereço"
-                      size="small"
-                      fullWidth
-                      placeholder="Rua Elizio Postali"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <p className="error-message">{errors.address?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="houseNumber"
-                      {...register("houseNumber")}
-                      label="Número"
-                      size="small"
-                      type="number"
-                      fullWidth
-                      placeholder="Exe: 50"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <p className="error-message">
-                      {errors.houseNumber?.message}
-                    </p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="cep"
-                      {...register("cep")}
-                      label="CEP"
-                      size="small"
-                      onChange={onChangeCEP}
-                     
-                      value={cep}
-                      fullWidth
-                      placeholder="99250-000"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <p className="error-message">{errors.cep?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="city"
-                      {...register("city")}
-                      label="Cidade"
-                      size="small"
-                      fullWidth
-                      onFocus={() => consultacep(cep)}
-                      value={!viaCep.localidade ? "" : viaCep.localidade}
-                      placeholder="São Paulo"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <p className="error-message">{errors.city?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="country"
-                      {...register("country")}
-                      label="Estado"
-                      size="small"
-                      fullWidth
-                      value={!viaCep.uf ? "" : viaCep.uf}
-                      placeholder="Rio Grande do Sul"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <p className="error-message">{errors.country?.message}</p>
                   </Grid>
                 </Grid>
                 <ButtonDefault
