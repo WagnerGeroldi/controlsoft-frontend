@@ -5,8 +5,9 @@ const baseURL = "https://backend-unisoft.herokuapp.com/";
 
 const api = axios.create({
   baseURL: baseURL,
+
   headers: {
-    "content-type": "application/json",
+    "Content-Type": "application/json",
   },
 });
 
@@ -14,6 +15,7 @@ const user = getUserLocalStorage();
 
 if (user) {
   api.defaults.headers.common["x-access-token"] = user.token;
+  api.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 }
 
 export { api };
