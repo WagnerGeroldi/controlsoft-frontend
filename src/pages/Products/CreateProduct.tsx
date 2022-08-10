@@ -181,6 +181,7 @@ export function CreateProduct() {
                       {...register("quantity")}
                       label="Quantidade"
                       size="small"
+                      type="number"
                       fullWidth
                       placeholder="exe: 10"
                       variant="outlined"

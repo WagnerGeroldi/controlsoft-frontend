@@ -223,6 +223,7 @@ export function UpdateProduct() {
                         {...register("quantity")}
                         label="Quantidade"
                         size="small"
+                        type="number"
                         fullWidth
                         placeholder="Exe: 2"
                         variant="outlined"
