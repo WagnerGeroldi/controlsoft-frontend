@@ -29,6 +29,8 @@ import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
 
 const FilterComponent = ({ filterText, onFilter, onClear }: any) => (
   <>
+  <div className="d-flex ">
+
     <input
       id="search"
       type="text"
@@ -45,6 +47,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }: any) => (
     >
       X
     </Button>
+  </div>
   </>
 );
 
