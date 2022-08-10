@@ -52,13 +52,10 @@ export function Dashboard() {
         </div>
         <div className="content-dashboard">
           <div className="row bg-light border border-dark p-4 m-0 text-justify">
-            Bem vindo ao CONTROL SOFT, por aqui vamos controlar todo o estoque
-            de produtos da Unisoft. <br />
-            Mantenha controle total, cadastre material, controle a entrada e
-            saída de itens Abaixo segue um resumo da quantidade de produtos em
-            estoque. <br />
-            Caso quiser personalizar os cards do dashboard, acesse as
-            configurações do sistema.
+            Bem-vindo! 
+            <br />
+             Este é o sistema para controle de fluxo do Estoque da
+            Rede Unisoft.
           </div>
           <div className="d-flex mx-auto justify-content-center mt-2 gap-2 p-4 flex-wrap">
             <Grid item lg={3} md={6} sm={6} xs={12}>

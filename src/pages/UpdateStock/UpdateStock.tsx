@@ -367,13 +367,23 @@ export function UpdateStock() {
             >
               <Grid container spacing={2}></Grid>
               <div className="d-flex align-items-center gap-2 flex-wrap justify-content-center mt-3">
-                <Button
-                  onClick={() => handleClickOpenModalRegisterOutOfStock()}
-                  variant="contained"
-                  color="primary"
-                >
-                  Atualizar Quantidades
-                </Button>
+                {order.length === 0 ? (
+                  <Button
+                    variant="contained"
+                    color="error"
+                  >
+                    Escolha produtos..
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleClickOpenModalRegisterOutOfStock()}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Atualizar Quantidades
+                  </Button>
+                )}
+
                 <Button
                   onClick={() => handleClickOpenModalCancelSale()}
                   variant="contained"

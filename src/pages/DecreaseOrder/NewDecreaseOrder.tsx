@@ -91,6 +91,10 @@ export function NewDecreaseOrder() {
     setOpenModalRegisterOutOfStock(true);
   };
 
+
+  console.log(order);
+  
+
   /*lidar com formulário */
   const {
     register,
@@ -377,13 +381,19 @@ export function NewDecreaseOrder() {
             </table>
 
             <div className="d-flex align-items-center gap-2 flex-wrap justify-content-center">
-              <Button
+              {order.length === 0 ? <Button
+                variant="contained"
+                color="error"
+              >
+                Cadastre produtos...
+              </Button> : <Button
                 onClick={() => handleClickOpenModalRegisterOutOfStock()}
                 variant="contained"
                 color="primary"
               >
                 Baixar Produtos
-              </Button>
+              </Button> }
+
               <Button
                 onClick={() => handleClickOpenModalCancelSale()}
                 variant="contained"
