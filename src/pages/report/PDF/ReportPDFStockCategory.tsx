@@ -12,7 +12,7 @@ export function ReportPDFStockCategory(products: any, category: string) {
       fontSize: 16,
       bold: true,
       alignment: "center",
-      margin: [10, 10, 10, 10],
+      margin: [20, 20, 20, 20]
     },
   ];
 
@@ -27,8 +27,9 @@ export function ReportPDFStockCategory(products: any, category: string) {
     {
       table: {
         headerRows: 1,
-        widths: ["*", "*", "*"],
+        widths: ["*", "*"],
         alignment: "center",
+        margin: [20, 20, 20, 20],
 
         body: [
           [
@@ -52,17 +53,17 @@ export function ReportPDFStockCategory(products: any, category: string) {
       fontSize: 12,
       bold: true,
       alignment: "center",
-      margin: [10, 10, 10, 10],
+      margin: [20, 20, 20, 20],
     },
   ];
 
   const docDefinition: any = {
     pageSize: "A4",
-    pageMargins: [20, 40, 20, 40],
+    pageMargins: [40, 40, 40, 40],
 
     header: [pdfTitle],
     content: [dataInfo],
     footer: [footerInfo],
   };
-  pdfMake.createPdf(docDefinition).download();
+  pdfMake.createPdf(docDefinition).download(`Relatório da categoria ${category}`);
 }

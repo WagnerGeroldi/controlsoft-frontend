@@ -12,7 +12,7 @@ export function ReportGeneral(products: any) {
       bold: true,
       alignment: "center",
       margin: [10, 10, 10, 15],
-    },
+    }
   ];
 
   const data =  products.map((item: any) => {
@@ -64,5 +64,5 @@ export function ReportGeneral(products: any) {
     content: [dataInfo],
     footer: [footerInfo],
   };
-  pdfMake.createPdf(docDefinition).download();
+  pdfMake.createPdf(docDefinition).download("Relatório_Geral");
 }

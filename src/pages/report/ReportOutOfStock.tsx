@@ -28,6 +28,9 @@ export function ReportOutOfStock() {
   const initialDate: any = searchParams.get("initialDate");
   const finalDate: any = searchParams.get("finalDate");
   const idQuery: any = searchParams.get("id");
+
+  const iniDate = HandleOnlyDate(new Date(initialDate))
+  const fDate = HandleOnlyDate(new Date(finalDate))
  
 
   useEffect(() => {
@@ -71,7 +74,7 @@ export function ReportOutOfStock() {
             <Button>Voltar</Button>
           </Link>
           <div className="info-user">
-            <h2>{`Relatório de Saídas de ${searchParams.get("initialDate")} até ${searchParams.get("finalDate")} `}</h2>
+            <h2>{`Relatório de Saídas de ${iniDate.props.children} até ${fDate.props.children} `}</h2>
           </div>
           <Grid container spacing={2} className="div-table">
             <Grid item xs={12}>
