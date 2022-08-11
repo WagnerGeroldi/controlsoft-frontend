@@ -7,15 +7,18 @@ export function ReportPDFOutByDate(products: any, initialDate: string, finalDate
   // (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
   (pdfMake as any).vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : pdfMake.vfs;
 
-  const iniDate = HandleOnlyDate(new Date(initialDate))
-  const fDate = HandleOnlyDate(new Date(finalDate))
-
+  function reverseDate(date) {
+    var splitDate = date.split("");    
+    var reverseArray = [splitDate[8], splitDate[9],splitDate[7],splitDate[5],splitDate[6],splitDate[4],splitDate[0],splitDate[1],splitDate[2],splitDate[3]];
+    var joinDate = reverseArray.join("");
+    return joinDate;
+  }
 
   
 
   const pdfTitle = [
     {
-      text: `Relatório de Saídas de ${iniDate.props.children} até ${fDate.props.children} `,
+      text: `Relatório de Saídas de ${reverseDate(initialDate)} até ${reverseDate(finalDate)} `,
       fontSize: 16,
       bold: true,
       alignment: "center",
