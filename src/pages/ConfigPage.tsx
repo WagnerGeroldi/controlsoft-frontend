@@ -84,43 +84,48 @@ export function ConfigPage() {
       <Header />
       <ToastContainer />
       <Paper
-        className=" overflow-auto"
-        sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1, marginTop: 3 }}
+        sx={{ p: 2, margin: "auto", maxWidth: 900, flexGrow: 1, marginTop: 3 }}
       >
         <div className="info-user">
           <h1> Dados do Usuário</h1>
         </div>
-        <table>
-          <tr>
-            <td className="index-info">Nome do Usuário:</td>{" "}
-            <td>
-              <strong>{userInfo.name}</strong>
-            </td>
-          </tr>
-          <tr>
-            <td className="index-info">E-mail:</td>{" "}
-            <td>
-              <strong>{userInfo.email}</strong>
-            </td>
-          </tr>
-          <tr>
-            <td className="index-info">Data do cadastro:</td>{" "}
-            <td>
-              <strong>
-                {!userInfo.createdAt
-                  ? "Não definido"
-                  : HandleDate(new Date(userInfo.createdAt))}
-              </strong>
-            </td>
-          </tr>
-        </table>
-        <div className="d-flex gap-2 align-items-center justify-content-between m-2 column-mobile">
+        <div className=" overflow-auto mb-3">
+          <table>
+            <tr>
+              <td className="index-info">Nome do Usuário:</td>{" "}
+              <td>
+                <strong>{userInfo.name}</strong>
+              </td>
+            </tr>
+            <tr>
+              <td className="index-info">E-mail:</td>{" "}
+              <td>
+                <strong>{userInfo.email}</strong>
+              </td>
+            </tr>
+            <tr>
+              <td className="index-info">Data do cadastro:</td>{" "}
+              <td>
+                <strong>
+                  {!userInfo.createdAt
+                    ? "Não definido"
+                    : HandleDate(new Date(userInfo.createdAt))}
+                </strong>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div className="d-flex gap-2 align-items-center justify-content-between m-2 btn-default">
           <Link to={`/user/updateUser/${id}`}>
-            <Button className="bg-primary text-white">Atualizar dados</Button>
+            <Button className="bg-primary text-white">
+              Atualizar dados
+            </Button>
           </Link>
-          <div className="d-flex gap-4 p-2 bg-light rounded">
+          <div className="d-flex gap-4 p-2 btn-default">
             <Link to={"/updatePassword"}>
-              <Button className="bg-warning text-white">Alterar a senha</Button>
+              <Button className="bg-warning text-white btn-default">
+                Alterar a senha
+              </Button>
             </Link>
             <Button className="bg-danger text-white" onClick={handleOpen}>
               {" "}
