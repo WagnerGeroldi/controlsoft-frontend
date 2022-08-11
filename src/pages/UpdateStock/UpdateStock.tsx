@@ -47,6 +47,11 @@ const validationRegistrerUser = yup.object().shape({
   quantity: yup.string().required("A quantidade é obrigatória"),
 });
 
+interface IForm {
+  product?: object;
+  quantity?: number;
+}
+
 export function UpdateStock() {
   let navigate = useNavigate();
   const { id } = useParams() as { id: string };
@@ -90,7 +95,7 @@ export function UpdateStock() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<IForm>({
     resolver: yupResolver(validationRegistrerUser),
   });
 
@@ -256,7 +261,6 @@ export function UpdateStock() {
   }));
 
   console.log(order);
-  
 
   return (
     <>
@@ -371,36 +375,32 @@ export function UpdateStock() {
               <Grid container spacing={2}></Grid>
               <div className="d-flex align-items-center gap-2 flex-wrap justify-content-center mt-3">
                 {order.length === 0 ? (
-                  <div className="d-flex gap-2">
-                      Aguardando produtos....
-                  </div>
+                  <div className="d-flex gap-2">Aguardando produtos....</div>
                 ) : (
                   <div className="d-flex gap-2 btn-default">
-                  <Button
-                  
-                    onClick={() => handleClickOpenModalRegisterOutOfStock()}
-                    variant="contained"
-                    color="primary"
-                  >
-                    Atualizar Quantidades
-                  </Button>
-                   <Button
-                   onClick={() => handleClickOpenModalCancelSale()}
-                   variant="contained"
-                   color="secondary"
-                 >
-                   Cancelar
-                 </Button>
-                  <Button
-                  onClick={() => handleClickOpenModalClearList()}
-                  variant="contained"
-                  color="warning"
-                >
-                  Limpar tudo
-                </Button>
-                </div>
+                    <Button
+                      onClick={() => handleClickOpenModalRegisterOutOfStock()}
+                      variant="contained"
+                      color="primary"
+                    >
+                      Atualizar Quantidades
+                    </Button>
+                    <Button
+                      onClick={() => handleClickOpenModalCancelSale()}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      onClick={() => handleClickOpenModalClearList()}
+                      variant="contained"
+                      color="warning"
+                    >
+                      Limpar tudo
+                    </Button>
+                  </div>
                 )}
-
               </div>
             </Box>
           </CardContent>

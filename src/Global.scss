@@ -29,6 +29,11 @@ body {
   gap: 20px;
 }
 
+.btn-report-lg {
+  display: flex;
+  gap: 20px;
+}
+
 @media(max-width: 600px) {
   .btn-default {
     display: flex;

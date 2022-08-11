@@ -49,8 +49,8 @@ const validationRegistrerUser = yup.object().shape({
 });
 
 interface IForm {
-  product?: any;
-  quantity?: any;
+  product?: object;
+  quantity?: number;
 }
 
 export function NewDecreaseOrder() {
@@ -74,7 +74,6 @@ export function NewDecreaseOrder() {
   const handleCloseModalInfo = () => {
     setOpen(false);
   };
-
 
   const handleClose = () => setOpen(false);
   const handleCloseModalClearList = () => setOpenModalClearList(false);
@@ -311,40 +310,44 @@ export function NewDecreaseOrder() {
             >
               <Grid container spacing={2}>
                 <Grid item lg={6} md={6} xs={12}>
-                  <Controller
-                    name="product"
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        ref={field.ref}
-                        onChange={field.onChange}
-                        options={options}
-                        isSearchable
-                        placeholder={"Escolha..."}
-                        autoFocus
-                        noOptionsMessage={() => "Não Achei nada... :("}
-                      />
-                    )}
-                  />
+                  <div className="d-flex flex-column gap-1">
+                    <Controller
+                      name="product"
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          ref={field.ref}
+                          onChange={field.onChange}
+                          options={options}
+                          isSearchable
+                          placeholder={"Escolha..."}
+                          autoFocus
+                          noOptionsMessage={() => "Não Achei nada... :("}
+                        />
+                      )}
+                    />
 
-                  <p className="error-message">{errors.product?.message}</p>
+                    <p className="error-message">{errors.product?.message}</p>
+                  </div>
                 </Grid>
                 <Grid item lg={3} md={3} xs={12}>
-                  <TextField
-                    id="quantity"
-                    {...register("quantity")}
-                    name="quantity"
-                    label="Quantidade"
-                    size="small"
-                    fullWidth
-                    type="number"
-                    placeholder="1"
-                    variant="outlined"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                  <p className="error-message">{errors.quantity?.message}</p>
+                  <div className="d-flex flex-column gap-1">
+                    <TextField
+                      id="quantity"
+                      {...register("quantity")}
+                      name="quantity"
+                      label="Quantidade"
+                      size="small"
+                      fullWidth
+                      type="number"
+                      placeholder="1"
+                      variant="outlined"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    <p className="error-message">{errors.quantity?.message}</p>
+                  </div>
                 </Grid>
                 <Grid item lg={3} md={3} xs={12}>
                   <Button variant="contained" type="submit">

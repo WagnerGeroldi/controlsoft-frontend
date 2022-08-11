@@ -107,35 +107,34 @@ export function ReportPage() {
       <Head title="Rede Unisoft - Relatórios" />
       <Header />
       <ToastContainer />
-      <div className="p-3">
+      <div className="p-1">
         <Card
           sx={{
             p: 2,
             margin: "auto",
-            maxWidth: 1100,
+            maxWidth: 900,
             flexGrow: 1,
             marginTop: 3,
           }}
         >
           <CardContent>
             <div className="info-user ">
-              <h1>Relatórios</h1>
+              <h2>Relatórios</h2>
             </div>
             <Grid container spacing={2}>
               <Grid item lg={6} xs={12}>
-                <h4>
+                <h6>
                   <strong>
                     Relatório geral do estoque <br />
                   </strong>
-                </h4>
-                <Stack
-                  spacing={2}
-                  marginTop={2}
-                  direction="row"
-                  justifyContent="left"
-                >
+                </h6>
+                <div className="btn-default btn-report-lg">
                   <Link to={`/reportTotalStock/${id}`}>
-                    <Button variant="contained" color="success">
+                    <Button
+                      className="btn-default"
+                      variant="contained"
+                      color="success"
+                    >
                       Visualizar na tela
                     </Button>
                   </Link>
@@ -146,13 +145,13 @@ export function ReportPage() {
                   >
                     Gerar PDF
                   </Button>
-                </Stack>
+                </div>
                 <hr />
-                <h4>
+                <h6>
                   <strong>
                     Relatório por categoria <br />
                   </strong>
-                </h4>
+                </h6>
 
                 <TextField
                   id="category"
@@ -183,31 +182,34 @@ export function ReportPage() {
                     <Link
                       to={`/reportStockCategory/${id}/?category=${category}`}
                     >
-                      <Button variant="contained" color="success">
+                      <Button
+                        variant="contained"
+                        color="success"
+                        className="btn-default"
+                      >
                         Visualizar na tela
                       </Button>
                     </Link>
                   ) : (
-                    <Button variant="contained" color="error">
+                    <Button
+                      variant="contained"
+                      color="error"
+                      className="btn-default"
+                    >
                       Escolha a categoria...
                     </Button>
                   )}
                 </Stack>
                 <hr />
-                <h4 className="mt-4">
+                <h6 className="mt-4">
                   <strong>
                     Relatório de produtos Baixados <br />
                   </strong>
-                </h4>
+                </h6>
                 <form
                   action={`/reportOutOfStock/?id=${id}&initialDate=${initialDate}&finalDate=${finalDate}`}
                 >
-                  <Stack
-                    spacing={2}
-                    marginTop={2}
-                    direction="row"
-                    justifyContent="left"
-                  >
+                  <div className="d-flex gap-4 flex-column">
                     <TextField
                       id="dateInit"
                       label="Data Inicial"
@@ -234,7 +236,7 @@ export function ReportPage() {
                       variant="outlined"
                       onChange={handleChangeFinalDate}
                     />
-                  </Stack>
+                  </div>
                   <Stack
                     spacing={2}
                     marginTop={2}
@@ -246,17 +248,29 @@ export function ReportPage() {
                         <Link
                           to={`/reportOutOfStock/?id=${id}&initialDate=${initialDate}&finalDate=${finalDate}`}
                         >
-                          <Button variant="contained" color="success">
+                          <Button
+                            variant="contained"
+                            color="success"
+                            className="btn-default"
+                          >
                             Visualizar na tela
                           </Button>
                         </Link>
                       ) : (
-                        <Button variant="contained" color="error">
+                        <Button
+                          variant="contained"
+                          color="error"
+                          className="btn-default"
+                        >
                           Datas invertidas
                         </Button>
                       )
                     ) : (
-                      <Button variant="contained" color="error">
+                      <Button
+                        variant="contained"
+                        color="error"
+                        className="btn-default"
+                      >
                         Escolha as datas...
                       </Button>
                     )}
