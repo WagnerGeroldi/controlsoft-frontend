@@ -79,5 +79,5 @@ export function ReportPDFOutByDate(products: any, initialDate: string, finalDate
     content: [dataInfo],
     footer: [footerInfo],
   };
-  pdfMake.createPdf(docDefinition).download(`Relatório de Baixas ${iniDate.props.children} até ${fDate.props.children} `);
+  pdfMake.createPdf(docDefinition).download(`Relatório de Baixas ${reverseDate(initialDate)} até ${reverseDate(finalDate)} `);
 }
