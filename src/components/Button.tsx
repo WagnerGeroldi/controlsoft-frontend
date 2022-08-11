@@ -9,16 +9,16 @@ import { IButton } from "./types/ComponentsInterfaces";
 
 function ButtonDefault(props: IButton) {
   return (
-    <Stack spacing={2} marginTop={2} direction="row" justifyContent="center">
+    <div className="btn-default btn-default-lg">
       <Button type="submit" variant="contained">
         {props.contentBtnPrimary}
       </Button>
       <Link to={props.link}>
-        <Button variant="contained" color="secondary">
+        <Button className="btn-default" variant="contained" color="secondary">
           {props.contentBtnSecondary}
         </Button>
       </Link>
-    </Stack>
+    </div>
   );
 }
 

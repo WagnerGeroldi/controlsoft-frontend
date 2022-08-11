@@ -84,6 +84,7 @@ export function ConfigPage() {
       <Header />
       <ToastContainer />
       <Paper
+        className=" overflow-auto"
         sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1, marginTop: 3 }}
       >
         <div className="info-user">
@@ -106,12 +107,14 @@ export function ConfigPage() {
             <td className="index-info">Data do cadastro:</td>{" "}
             <td>
               <strong>
-                {!userInfo.createdAt ? "Não definido" : HandleDate(new Date(userInfo.createdAt))}
+                {!userInfo.createdAt
+                  ? "Não definido"
+                  : HandleDate(new Date(userInfo.createdAt))}
               </strong>
             </td>
           </tr>
         </table>
-        <div className="d-flex gap-2 align-items-center justify-content-between m-2">
+        <div className="d-flex gap-2 align-items-center justify-content-between m-2 column-mobile">
           <Link to={`/user/updateUser/${id}`}>
             <Button className="bg-primary text-white">Atualizar dados</Button>
           </Link>

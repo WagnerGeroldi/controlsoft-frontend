@@ -256,7 +256,7 @@ export function Products(this: any) {
           }}
         >
           <div className="d-flex flex-wrap justify-content-between gap-2">
-            <div className="d-flex gap-2">
+            <div className="d-flex gap-2 column-mobile">
               <Link to={`/products/createProduct/${id}`}>
                 <Button
                   variant="contained"

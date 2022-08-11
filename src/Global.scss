@@ -21,3 +21,22 @@ body {
     color: darkblue;
   }
 }
+
+
+.btn-default-lg {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+@media(max-width: 600px) {
+  .btn-default {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin: auto;
+  
+  }
+  
+}
