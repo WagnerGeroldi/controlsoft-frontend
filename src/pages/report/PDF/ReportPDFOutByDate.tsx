@@ -4,7 +4,8 @@ import { HandleOnlyDate } from "../../../services/HandleOnlyDate";
 
 export function ReportPDFOutByDate(products: any, initialDate: string, finalDate: string) {
   
-  (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+  // (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+  (pdfMake as any).vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : pdfMake.vfs;
 
   const iniDate = HandleOnlyDate(new Date(initialDate))
   const fDate = HandleOnlyDate(new Date(finalDate))
@@ -72,6 +73,5 @@ export function ReportPDFOutByDate(products: any, initialDate: string, finalDate
     content: [dataInfo],
     footer: [footerInfo],
   };
-  let win = window.open('', '_blank');
-  pdfMake.createPdf(docDefinition).open({}, win);
+  pdfMake.createPdf(docDefinition).download();
 }

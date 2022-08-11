@@ -1,9 +1,10 @@
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from  "pdfmake/build/vfs_fonts";
 
+
 export function ReportPDFStockCategory(products: any, category: string) {
   
-  (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+  (pdfMake as any).vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : pdfMake.vfs;
 
   const pdfTitle = [
     {
@@ -63,6 +64,5 @@ export function ReportPDFStockCategory(products: any, category: string) {
     content: [dataInfo],
     footer: [footerInfo],
   };
-  let win = window.open('', '_blank');
-  pdfMake.createPdf(docDefinition).open({}, win);
+  pdfMake.createPdf(docDefinition).download();
 }
