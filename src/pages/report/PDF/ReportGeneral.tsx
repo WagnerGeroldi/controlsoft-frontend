@@ -56,7 +56,7 @@ export function ReportGeneral(products: any) {
     },
   ];
 
-  const docDefinition = {
+  const docDefinition: any = {
     pageSize: "A4",
     pageMargins: [20, 40, 20, 40],
 

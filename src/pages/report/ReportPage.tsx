@@ -48,6 +48,7 @@ export function ReportPage() {
     setFinalDate(event.target.value);
   }
 
+
   /*Consultas BACKEND */
 
   useEffect(() => {

@@ -10,6 +10,9 @@ export function ReportPDFOutByDate(products: any, initialDate: string, finalDate
   const iniDate = HandleOnlyDate(new Date(initialDate))
   const fDate = HandleOnlyDate(new Date(finalDate))
 
+
+  
+
   const pdfTitle = [
     {
       text: `Relatório de Saídas de ${iniDate.props.children} até ${fDate.props.children} `,

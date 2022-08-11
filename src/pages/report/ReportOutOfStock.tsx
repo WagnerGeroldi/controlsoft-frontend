@@ -20,7 +20,6 @@ import { api } from "../../api/api";
 import { ReportPDFOutByDate } from "./PDF/ReportPDFOutByDate";
 import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
 
-
 export function ReportOutOfStock() {
   const [outByDate, setOutByDate] = useState([] as any);
   const [searchParams] = useSearchParams();
@@ -29,19 +28,26 @@ export function ReportOutOfStock() {
   const finalDate: any = searchParams.get("finalDate");
   const idQuery: any = searchParams.get("id");
 
-  const iniDate = HandleOnlyDate(new Date(initialDate))
-  const fDate = HandleOnlyDate(new Date(finalDate))
- 
+
+  function reverseDate(date) {
+    var splitDate = date.split("");    
+    var reverseArray = [splitDate[8], splitDate[9],splitDate[7],splitDate[5],splitDate[6],splitDate[4],splitDate[0],splitDate[1],splitDate[2],splitDate[3]];
+    var joinDate = reverseArray.join("");
+    return joinDate;
+  }
 
   useEffect(() => {
     api
-      .get(`/outOfStock/findByDate/?id=${idQuery}&initialDate=${initialDate}&finalDate=${finalDate}`, {
-        headers: {
-          "x-access-token": token,
-        },
-      })
+      .get(
+        `/outOfStock/findByDate/?id=${idQuery}&initialDate=${initialDate}&finalDate=${finalDate}`,
+        {
+          headers: {
+            "x-access-token": token,
+          },
+        }
+      )
       .then((res) => {
-        setOutByDate(res.data)
+        setOutByDate(res.data);
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -64,7 +70,9 @@ export function ReportOutOfStock() {
           }}
         >
           <Button
-            onClick={(e) => ReportPDFOutByDate(outByDate, initialDate, finalDate)}
+            onClick={(e) =>
+              ReportPDFOutByDate(outByDate, initialDate, finalDate)
+            }
             variant="contained"
             color="primary"
           >
@@ -74,11 +82,11 @@ export function ReportOutOfStock() {
             <Button>Voltar</Button>
           </Link>
           <div className="info-user">
-            <h2>{`Relatório de Saídas de ${iniDate.props.children} até ${fDate.props.children} `}</h2>
+            <h2>{`Relatório de Saídas de ${reverseDate(initialDate)} até ${reverseDate(finalDate)} `}</h2>
           </div>
           <Grid container spacing={2} className="div-table">
             <Grid item xs={12}>
-                <table className="table table-striped">
+              <table className="table table-striped">
                 <thead>
                   <tr>
                     <td>Produto</td>
