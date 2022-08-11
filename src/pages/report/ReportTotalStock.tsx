@@ -53,7 +53,6 @@ export function ReportTotalStock() {
           default:
             toast.error(err.response.data.message);
         }
-        
       });
   }, []);
 
@@ -88,26 +87,30 @@ export function ReportTotalStock() {
           </div>
           <Grid container spacing={2} className="div-table">
             <Grid item xs={12}>
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <td>Produto</td>
-                    <td>Quantidade</td>
-                    <td>Categoria</td>
-                    <td>Data do Cadastro</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((item: any) => (
-                    <tr key={item.id}>
-                      <td>{item.name}</td>
-                      <td>{item.quantity}</td>
-                      <td>{item.categoryProduct}</td>
-                      <td>{HandleOnlyDate(new Date(item.createdAt))}</td>
+              {products.length === 0 ? (
+                "Não existem produtos para mostrar"
+              ) : (
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <td>Produto</td>
+                      <td>Quantidade</td>
+                      <td>Categoria</td>
+                      <td>Data do Cadastro</td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {products.map((item: any) => (
+                      <tr key={item.id}>
+                        <td>{item.name}</td>
+                        <td>{item.quantity}</td>
+                        <td>{item.categoryProduct}</td>
+                        <td>{HandleOnlyDate(new Date(item.createdAt))}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </Grid>
           </Grid>
         </Paper>

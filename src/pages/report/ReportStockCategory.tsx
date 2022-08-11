@@ -35,7 +35,7 @@ export function ReportStockCategory() {
         },
       })
       .then((res) => {
-        setProductsCategory(res.data)
+        setProductsCategory(res.data);
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -72,24 +72,28 @@ export function ReportStockCategory() {
           </div>
           <Grid container spacing={2} className="div-table">
             <Grid item xs={12}>
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <td>Produto</td>
-                    <td>Quantidade</td>
-                    <td>Data do Cadastro</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {productsCategory.map((item: any) => (
-                    <tr key={item.id}>
-                      <td>{item.name}</td>
-                      <td>{item.quantity}</td>
-                      <td>{HandleOnlyDate(new Date(item.createdAt))}</td>
+              {productsCategory.length === 0 ? (
+                "Não existem produtos nesta categoria..."
+              ) : (
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <td>Produto</td>
+                      <td>Quantidade</td>
+                      <td>Data do Cadastro</td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {productsCategory.map((item: any) => (
+                      <tr key={item.id}>
+                        <td>{item.name}</td>
+                        <td>{item.quantity}</td>
+                        <td>{HandleOnlyDate(new Date(item.createdAt))}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </Grid>
           </Grid>
         </Paper>
