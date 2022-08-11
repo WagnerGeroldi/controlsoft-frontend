@@ -255,6 +255,9 @@ export function UpdateStock() {
     label: product.name,
   }));
 
+  console.log(order);
+  
+
   return (
     <>
       <Head title="Rede Unisoft - Entrada de Estoque" />
@@ -348,7 +351,7 @@ export function UpdateStock() {
                   <tr key={item.id}>
                     <td>{item.product}</td>
                     <td>{item.quantity}</td>
-                    <td>{item.categoryProduct}</td>
+                    <td>{item.category}</td>
                     <td>
                       <DeleteIcon
                         className="icon-delete"

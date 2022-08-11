@@ -113,16 +113,18 @@ export function ResetPassword() {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <TextField
-                      id="email"
-                      {...register("email")}
-                      label="Email"
-                      size="small"
-                      fullWidth
-                      placeholder="usuario@dominio.com"
-                      variant="outlined"
-                    />
-                    <p className="error-message">{errors.email?.message}</p>
+                    <div className="d-flex flex-column gap-1">
+                      <TextField
+                        id="email"
+                        {...register("email")}
+                        label="Email"
+                        size="small"
+                        fullWidth
+                        placeholder="usuario@dominio.com"
+                        variant="outlined"
+                      />
+                      <p className="error-message">{errors.email?.message}</p>
+                    </div>
                   </Grid>
                 </Grid>
                 <ButtonDefault

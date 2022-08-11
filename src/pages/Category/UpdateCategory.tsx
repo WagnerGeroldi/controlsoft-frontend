@@ -76,7 +76,8 @@ export function UpdateCategory() {
       .then((res) => {
         reset(res.data);
         setProductData(res.data);
-      }).catch((err) => {
+      })
+      .catch((err) => {
         switch (err.response.status) {
           case 401:
             toast.error(
@@ -109,18 +110,16 @@ export function UpdateCategory() {
       .catch((err) => {
         const message =
           err.response.data.message || err.response.data.errors[0].msg;
-          switch (err.response.status) {
-            case 401:
-              toast.error(
-                message + "\n Redirecionando para login..."
-              );
-              setTimeout(() => {
-                navigate("/login");
-              }, 4000);
-              break;
-            default:
-              toast.error(message);
-          }
+        switch (err.response.status) {
+          case 401:
+            toast.error(message + "\n Redirecionando para login...");
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(message);
+        }
       });
 
   return (
@@ -155,19 +154,21 @@ export function UpdateCategory() {
             >
               <Grid container spacing={2}>
                 <Grid item lg={12} md={12} xs={12}>
-                  <TextField
-                    id="name"
-                    label="Nome"
-                    {...register("name")}
-                    variant="outlined"
-                    fullWidth
-                    type="text"
-                    size="small"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                  <p className="error-message">{errors.name?.message}</p>
+                  <div className="d-flex flex-column gap-1">
+                    <TextField
+                      id="name"
+                      label="Nome"
+                      {...register("name")}
+                      variant="outlined"
+                      fullWidth
+                      type="text"
+                      size="small"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    <p className="error-message">{errors.name?.message}</p>
+                  </div>
                 </Grid>
               </Grid>
               <ButtonDefault

@@ -16,7 +16,6 @@ import {
   MenuItem,
 } from "@mui/material";
 
-
 /* Imports Libs */
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
@@ -35,7 +34,7 @@ import {
   getUserLocalStorage,
 } from "../../state/SaveLocalStorage";
 import { Head } from "../partials/Head";
-import {HandleOnlyDate} from "../../services/HandleOnlyDate"
+import { HandleOnlyDate } from "../../services/HandleOnlyDate";
 
 /*Interface*/
 interface IUser {
@@ -60,10 +59,10 @@ export function UpdateProduct() {
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams() as { id: string };
-  const [productData, setProductData] = useState([] as any)
+  const [productData, setProductData] = useState([] as any);
   const [values, setValues] = useState([] as any);
 
-  const userID = getUserLocalStorage()
+  const userID = getUserLocalStorage();
 
   /*lidar com formulário */
   const {
@@ -85,9 +84,10 @@ export function UpdateProduct() {
         },
       })
       .then((res) => {
-        reset(res.data)
-        setProductData(res.data)
-      }).catch((err) => {
+        reset(res.data);
+        setProductData(res.data);
+      })
+      .catch((err) => {
         switch (err.response.status) {
           case 401:
             toast.error(
@@ -111,8 +111,9 @@ export function UpdateProduct() {
         },
       })
       .then((res) => {
-        setValues(res.data)
-      }).catch((err) => {
+        setValues(res.data);
+      })
+      .catch((err) => {
         switch (err.response.status) {
           case 401:
             toast.error(
@@ -145,25 +146,21 @@ export function UpdateProduct() {
       .catch((error) => {
         const message =
           error.response.data.message || error.response.data.errors[0].msg;
-          switch (error.response.status) {
-            case 401:
-              toast.error(
-                message + "\n Redirecionando para login..."
-              );
-              setTimeout(() => {
-                navigate("/login");
-              }, 4000);
-              break;
-            default:
-              toast.error(message);
-          }
+        switch (error.response.status) {
+          case 401:
+            toast.error(message + "\n Redirecionando para login...");
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(message);
+        }
       });
-    
+
   return (
     <>
-      <Head
-    title= "Rede Unisoft - Atualizar Produto"
-    />
+      <Head title="Rede Unisoft - Atualizar Produto" />
       <div className="container">
         <Card sx={{ maxWidth: 875 }}>
           <ToastContainer />
@@ -174,11 +171,14 @@ export function UpdateProduct() {
             </Typography>
             <br />
             <div className="d-flex justify-content-between align-items-center p-2">
-            <p>Atualize os dados do produto!</p>
-            <p>
-              Data do cadastro: <strong> {HandleOnlyDate( new Date(productData.createdAt))}</strong>
-            </p>
-
+              <p>Atualize os dados do produto!</p>
+              <p>
+                Data do cadastro:{" "}
+                <strong>
+                  {" "}
+                  {HandleOnlyDate(new Date(productData.createdAt))}
+                </strong>
+              </p>
             </div>
             <Paper sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1 }}>
               <Box
@@ -190,19 +190,21 @@ export function UpdateProduct() {
               >
                 <Grid container spacing={2}>
                   <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="name"
-                      label="Nome"
-                      {...register("name")}
-                      variant="outlined"
-                      fullWidth
-                      type="text"
-                      size="small"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    <p className="error-message">{errors.name?.message}</p>
+                    <div className="d-flex flex-column gap-1">
+                      <TextField
+                        id="name"
+                        label="Nome"
+                        {...register("name")}
+                        variant="outlined"
+                        fullWidth
+                        type="text"
+                        size="small"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                      <p className="error-message">{errors.name?.message}</p>
+                    </div>
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
                     <TextField
@@ -218,6 +220,7 @@ export function UpdateProduct() {
                     />
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
+                    <div className="d-flex flex-column gap-1">
                       <TextField
                         id="quantity"
                         {...register("quantity")}
@@ -232,9 +235,13 @@ export function UpdateProduct() {
                         }}
                       />
 
-                    <p className="error-message">{errors.quantity?.message}</p>
+                      <p className="error-message">
+                        {errors.quantity?.message}
+                      </p>
+                    </div>
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
+                  <div className="d-flex flex-column gap-1">
                     <TextField
                       id="category"
                       {...register("category")}
@@ -253,8 +260,9 @@ export function UpdateProduct() {
                           {item.name}
                         </MenuItem>
                       ))}
-                      </TextField>
+                    </TextField>
                     <p className="error-message">{errors.category?.message}</p>
+                    </div>
                   </Grid>
                 </Grid>
                 <ButtonDefault

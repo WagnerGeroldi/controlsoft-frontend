@@ -144,47 +144,55 @@ export function UpdatePassword() {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <TextField
-                      type="password"
-                      id="password"
-                      {...register("password")}
-                      label="Digite a senha atual"
-                      size="small"
-                      fullWidth
-                      placeholder="***************"
-                      variant="outlined"
-                    />
-                    <p className="error-message">{errors.password?.message}</p>
+                    <div className="d-flex flex-column gap-1">
+                      <TextField
+                        type="password"
+                        id="password"
+                        {...register("password")}
+                        label="Digite a senha atual"
+                        size="small"
+                        fullWidth
+                        placeholder="***************"
+                        variant="outlined"
+                      />
+                      <p className="error-message">
+                        {errors.password?.message}
+                      </p>
+                    </div>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      type="password"
-                      id="newpassword"
-                      {...register("newpassword")}
-                      label="Digite sua nova senha"
-                      size="small"
-                      fullWidth
-                      placeholder="**************"
-                      variant="outlined"
-                    />
-                    <p className="error-message">
-                      {errors.newpassword?.message}
-                    </p>
+                    <div className="d-flex flex-column gap-1">
+                      <TextField
+                        type="password"
+                        id="newpassword"
+                        {...register("newpassword")}
+                        label="Digite sua nova senha"
+                        size="small"
+                        fullWidth
+                        placeholder="**************"
+                        variant="outlined"
+                      />
+                      <p className="error-message">
+                        {errors.newpassword?.message}
+                      </p>
+                    </div>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      type="password"
-                      id="confirmnewpassword"
-                      {...register("confirmnewpassword")}
-                      label="Repita sua nova senha"
-                      size="small"
-                      fullWidth
-                      placeholder="**************"
-                      variant="outlined"
-                    />
-                    <p className="error-message">
-                      {errors.confirmnewpassword?.message}
-                    </p>
+                    <div className="d-flex flex-column gap-1">
+                      <TextField
+                        type="password"
+                        id="confirmnewpassword"
+                        {...register("confirmnewpassword")}
+                        label="Repita sua nova senha"
+                        size="small"
+                        fullWidth
+                        placeholder="**************"
+                        variant="outlined"
+                      />
+                      <p className="error-message">
+                        {errors.confirmnewpassword?.message}
+                      </p>
+                    </div>
                   </Grid>
                 </Grid>
                 <div className="container-btn">

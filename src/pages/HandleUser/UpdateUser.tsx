@@ -129,7 +129,9 @@ export function UpdateUser() {
                 autoComplete="off"
               >
                 <Grid container spacing={2}>
+
                   <Grid item lg={6} md={6} xs={12}>
+                  <div className="d-flex flex-column gap-1">
                     <TextField
                       id="name"
                       label="Nome Completo"
@@ -143,8 +145,10 @@ export function UpdateUser() {
                       }}
                     />
                     <p className="error-message">{errors.name?.message}</p>
+                    </div>
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
+                    
                     <TextField
                       id="email"
                       label="Email"

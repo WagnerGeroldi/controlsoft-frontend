@@ -122,7 +122,7 @@ export function CreateProduct() {
           "x-access-token": token,
         },
       })
-      .then((res) => {        
+      .then((res) => {
         res.data.length === 0 ? setOpenModalInfo(true) : setValues(res.data);
       })
       .catch((err) => {
@@ -165,68 +165,78 @@ export function CreateProduct() {
               >
                 <Grid container spacing={2}>
                   <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="name"
-                      {...register("name")}
-                      label="Nome"
-                      variant="outlined"
-                      fullWidth
-                      type="text"
-                      placeholder="Exe: Coca-cola 2L"
-                      size="small"
-                    />
-                    <p className="error-message">{errors.name?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="description"
-                      {...register("description")}
-                      label="Descrição"
-                      size="small"
-                      fullWidth
-                      variant="outlined"
-                    />
-                    <p className="error-message">
-                      {errors.description?.message}
-                    </p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="phone"
-                      {...register("quantity")}
-                      label="Quantidade"
-                      size="small"
-                      type="number"
-                      fullWidth
-                      placeholder="exe: 10"
-                      variant="outlined"
-                    />
-                    <p className="error-message">{errors.quantity?.message}</p>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <div className="d-flex gap-2">
+                    <div className="d-flex flex-column gap-1">
                       <TextField
-                        id="category"
-                        {...register("category")}
-                        label="Categoria"
+                        id="name"
+                        {...register("name")}
+                        label="Nome"
+                        variant="outlined"
+                        fullWidth
+                        type="text"
+                        placeholder="Exe: Coca-cola 2L"
                         size="small"
+                      />
+                      <p className="error-message">{errors.name?.message}</p>
+                    </div>
+                  </Grid>
+                  <Grid item lg={6} md={6} xs={12}>
+                    <div className="d-flex flex-column gap-1">
+                      <TextField
+                        id="description"
+                        {...register("description")}
+                        label="Descrição"
+                        size="small"
+                        fullWidth
+                        variant="outlined"
+                      />
+                      <p className="error-message">
+                        {errors.description?.message}
+                      </p>
+                    </div>
+                  </Grid>
+                  <Grid item lg={6} md={6} xs={12}>
+                    <div className="d-flex flex-column gap-1">
+                      <TextField
+                        id="quantity"
+                        {...register("quantity")}
+                        label="Quantidade"
+                        size="small"
+                        type="number"
                         fullWidth
                         placeholder="exe: 10"
                         variant="outlined"
-                        select
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      >
-                        {values.map((item: any) => (
-                          <MenuItem key={item.id} value={item}>
-                            {item.name}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                      />
                       <p className="error-message">
-                        {errors.category?.message}
+                        {errors.quantity?.message}
                       </p>
+                    </div>
+                  </Grid>
+                  <Grid item lg={6} md={6} xs={12}>
+                    <div className="d-flex gap-2 align-items-start">
+                      <div className="d-flex flex-column gap-1 w-100">
+                        <TextField
+                          id="category"
+                          {...register("category")}
+                          label="Categoria"
+                          size="small"
+                          fullWidth
+                          placeholder="exe: 10"
+                          variant="outlined"
+                          select
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        >
+                          {values.map((item: any) => (
+                            <MenuItem key={item.id} value={item}>
+                              {item.name}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                        <p className="error-message">
+                          {errors.category?.message}
+                        </p>
+                      </div>
                       <IconButton
                         aria-label="update"
                         size="large"
@@ -260,7 +270,7 @@ export function CreateProduct() {
           text="Sua lista de Categorias está vazia, e é obrigatório indicar uma para cadastrar o produto. Vá para a seção de categorias e cadastre as categorias necessárias para cadastrar seus produtos"
           setOpen={openModalInfo}
           setClose={handleCloseModalInfo}
-          textButon= "Cadastrar categoria"
+          textButon="Cadastrar categoria"
         />
       </div>
     </>
