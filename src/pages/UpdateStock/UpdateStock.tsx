@@ -368,13 +368,11 @@ export function UpdateStock() {
               <Grid container spacing={2}></Grid>
               <div className="d-flex align-items-center gap-2 flex-wrap justify-content-center mt-3">
                 {order.length === 0 ? (
-                  <Button
-                    variant="contained"
-                    color="error"
-                  >
-                    Escolha produtos..
-                  </Button>
+                  <div className="d-flex gap-2">
+                      Aguardando produtos....
+                  </div>
                 ) : (
+                  <div className="d-flex gap-2">
                   <Button
                     onClick={() => handleClickOpenModalRegisterOutOfStock()}
                     variant="contained"
@@ -382,22 +380,23 @@ export function UpdateStock() {
                   >
                     Atualizar Quantidades
                   </Button>
-                )}
-
-                <Button
-                  onClick={() => handleClickOpenModalCancelSale()}
-                  variant="contained"
-                  color="secondary"
-                >
-                  Cancelar
-                </Button>
-                <Button
+                   <Button
+                   onClick={() => handleClickOpenModalCancelSale()}
+                   variant="contained"
+                   color="secondary"
+                 >
+                   Cancelar
+                 </Button>
+                  <Button
                   onClick={() => handleClickOpenModalClearList()}
                   variant="contained"
                   color="warning"
                 >
                   Limpar tudo
                 </Button>
+                </div>
+                )}
+
               </div>
             </Box>
           </CardContent>

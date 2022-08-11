@@ -91,9 +91,7 @@ export function NewDecreaseOrder() {
     setOpenModalRegisterOutOfStock(true);
   };
 
-
   console.log(order);
-  
 
   /*lidar com formulário */
   const {
@@ -281,7 +279,7 @@ export function NewDecreaseOrder() {
       <Header />
       <ToastContainer />
       <div className="d-flex justify-content-center align-items-start mx-auto m-3 gap-3 flex-wrap p-3 ">
-        <Card  sx={{ maxWidth: 1100 }}>
+        <Card sx={{ maxWidth: 1100 }}>
           <CardContent className="card-adjust">
             <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
               <i
@@ -381,33 +379,33 @@ export function NewDecreaseOrder() {
             </table>
 
             <div className="d-flex align-items-center gap-2 flex-wrap justify-content-center">
-              {order.length === 0 ? <Button
-                variant="contained"
-                color="error"
-              >
-                Cadastre produtos...
-              </Button> : <Button
-                onClick={() => handleClickOpenModalRegisterOutOfStock()}
-                variant="contained"
-                color="primary"
-              >
-                Baixar Produtos
-              </Button> }
-
-              <Button
-                onClick={() => handleClickOpenModalCancelSale()}
-                variant="contained"
-                color="secondary"
-              >
-                Cancelar
-              </Button>
-              <Button
-                onClick={() => handleClickOpenModalClearList()}
-                variant="contained"
-                color="warning"
-              >
-                Limpar tudo
-              </Button>
+              {order.length === 0 ? (
+                <div >Aguardando produtos....</div>
+              ) : (
+                <div className="d-flex gap-2">
+                  <Button
+                    onClick={() => handleClickOpenModalRegisterOutOfStock()}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Baixar Produtos
+                  </Button>
+                  <Button
+                    onClick={() => handleClickOpenModalCancelSale()}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={() => handleClickOpenModalClearList()}
+                    variant="contained"
+                    color="warning"
+                  >
+                    Limpar tudo
+                  </Button>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

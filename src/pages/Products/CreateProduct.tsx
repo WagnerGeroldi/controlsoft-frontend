@@ -13,7 +13,9 @@ import {
   CardContent,
   Typography,
   MenuItem,
+  IconButton,
 } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 
 /* Imports Libs */
 import * as yup from "yup";
@@ -31,7 +33,10 @@ import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
 import { Header } from "../partials/Header";
 import { Head } from "../partials/Head";
-import { getTokenLocalStorage, getUserLocalStorage } from "../../state/SaveLocalStorage";
+import {
+  getTokenLocalStorage,
+  getUserLocalStorage,
+} from "../../state/SaveLocalStorage";
 
 /*Interface*/
 interface IProductRegister {
@@ -56,7 +61,6 @@ export function CreateProduct() {
   const [values, setValues] = useState([] as any);
   const { id } = useParams() as { id: string };
 
-
   /*lidar com formulário */
   const {
     register,
@@ -73,8 +77,7 @@ export function CreateProduct() {
         headers: {
           "x-access-token": token,
         },
-      }
-)
+      })
       .then((res) => {
         setIsLoading(true);
         toast.success("Produto cadastrado!");
@@ -85,46 +88,43 @@ export function CreateProduct() {
       .catch((err) => {
         const message =
           err.response.data.message || err.response.data.errors[0].msg;
-          switch (err.response.status) {
-            case 401:
-              toast.error(
-                message + "\n Redirecionando para login..."
-              );
-              setTimeout(() => {
-                navigate("/login");
-              }, 4000);
-              break;
-            default:
-              toast.error(message);
-          }
+        switch (err.response.status) {
+          case 401:
+            toast.error(message + "\n Redirecionando para login...");
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(message);
+        }
       });
 
-
-      useEffect(() => {
-        api
-          .get(`/category/${id}`, {
-            headers: {
-              "x-access-token": token,
-            },
-          }
-    )
-          .then((res) => {
-            setValues(res.data)            
-          }).catch((err) => {
-            switch (err.response.status) {
-              case 401:
-                toast.error(
-                  err.response.data.message + "\n Redirecionando para login..."
-                );
-                setTimeout(() => {
-                  navigate("/login");
-                }, 4000);
-                break;
-              default:
-                toast.error(err.response.data.message);
-            }
-          });
-      }, []);
+  useEffect(() => {
+    api
+      .get(`/category/${id}`, {
+        headers: {
+          "x-access-token": token,
+        },
+      })
+      .then((res) => {
+        setValues(res.data);
+      })
+      .catch((err) => {
+        switch (err.response.status) {
+          case 401:
+            toast.error(
+              err.response.data.message + "\n Redirecionando para login..."
+            );
+            setTimeout(() => {
+              navigate("/login");
+            }, 4000);
+            break;
+          default:
+            toast.error(err.response.data.message);
+        }
+      });
+  }, []);
 
   return (
     <>
@@ -189,27 +189,38 @@ export function CreateProduct() {
                     <p className="error-message">{errors.quantity?.message}</p>
                   </Grid>
                   <Grid item lg={6} md={6} xs={12}>
-                    <TextField
-                      id="category"
-                      {...register("category")}
-                      label="Categoria"
-                      size="small"
-                      fullWidth
-                      placeholder="exe: 10"
-                      variant="outlined"
-                      select
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    >
-                      {values.map((item: any) => (
-                        <MenuItem key={item.id} value={item}>
-                          {item.name}
-                        </MenuItem>
-
-                      ))}
+                    <div className="d-flex gap-2">
+                      <TextField
+                        id="category"
+                        {...register("category")}
+                        label="Categoria"
+                        size="small"
+                        fullWidth
+                        placeholder="exe: 10"
+                        variant="outlined"
+                        select
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      >
+                        {values.map((item: any) => (
+                          <MenuItem key={item.id} value={item}>
+                            {item.name}
+                          </MenuItem>
+                        ))}
                       </TextField>
-                    <p className="error-message">{errors.category?.message}</p>
+                      <p className="error-message">
+                        {errors.category?.message}
+                      </p>
+                      <IconButton
+                        aria-label="update"
+                        size="large"
+                        // onClick={}
+                      >
+                        <AddIcon
+                        color="primary" />
+                      </IconButton>
+                    </div>
                   </Grid>
                 </Grid>
 
