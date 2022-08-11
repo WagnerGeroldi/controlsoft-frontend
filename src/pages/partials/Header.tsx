@@ -144,7 +144,7 @@ export function Header(this: any) {
             <img src={logo} alt="LOGO" width={55} />
           </Link>
           <div className="area-logo-text">
-            <span>Rede Unisoft</span>
+            <span><strong>Rede Unisoft</strong></span>
             <div>
               <small>Controle de Estoque</small>
             </div>
