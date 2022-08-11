@@ -35,6 +35,9 @@ import { ModalConfirm } from "../../components/Modals/ModalConfirm";
 import { ShowSaudation } from "../../services/ShowSaudation";
 import { HandleDate } from "../../services/HandleDate";
 
+
+import "./Header.scss"
+
 export function Header(this: any) {
   const user = getUserLocalStorage();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -144,7 +147,7 @@ export function Header(this: any) {
             <img src={logo} alt="LOGO" width={55} />
           </Link>
           <div className="area-logo-text">
-            <span><strong>Rede Unisoft</strong></span>
+            <span className="unisoft">Rede Unisoft</span>
             <div>
               <small>Controle de Estoque</small>
             </div>
