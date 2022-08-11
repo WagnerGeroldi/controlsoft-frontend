@@ -23,7 +23,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 /* imports css */
 import "../styles/alert.scss";
 import "../styles/UpdatePassword.scss";
-import "../styles/Register.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 /* imports extras */

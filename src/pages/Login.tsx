@@ -9,8 +9,6 @@ import {
   Grid,
   Paper,
   TextField,
-  Card,
-  CardContent,
   Typography,
 } from "@mui/material";
 
@@ -35,6 +33,7 @@ import {
 /*import componentes */
 import { ButtonDefault } from "../components/Button";
 import { Head } from "./partials/Head";
+import { HeaderDefault } from "./partials/HeaderDefault";
 
 interface IUser {
   email: string;
@@ -110,71 +109,65 @@ export function Login() {
   return (
     <>
       <Head title="Rede Unisoft - Fazer Login" />
-
-      <div className="container">
-        <Card sx={{ maxWidth: 875 }}>
-          <ToastContainer />
-          <CardContent>
+      <HeaderDefault />
+      <ToastContainer />
+      <div className="container-fluid mt-5 mx-auto">
+        <Paper sx={{ p: 2, margin: "auto", flexGrow: 1, maxWidth: 550 }}>
+          <Box
+            onSubmit={handleSubmit(loginUser)}
+            component="form"
+            sx={{ flexGrow: 1 }}
+            noValidate
+            autoComplete="off"
+          >
             <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
               <i className="fa fa-user fa-2x" aria-hidden="true"></i> ACESSE SUA
               CONTA
             </Typography>
-            <Paper sx={{ p: 2, margin: "auto", flexGrow: 1 }}>
-              <Box
-                onSubmit={handleSubmit(loginUser)}
-                component="form"
-                sx={{ flexGrow: 1 }}
-                noValidate
-                autoComplete="off"
-              >
-                <Grid container spacing={2}>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <div className="d-flex flex-column gap-1">
-                      <TextField
-                        id="email"
-                        {...register("email")}
-                        label="Email"
-                        size="small"
-                        fullWidth
-                        placeholder="usuario@dominio.com"
-                        variant="outlined"
-                      />
-                      <p className="error-message">{errors.email?.message}</p>
-                    </div>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <div className="d-flex flex-column gap-1">
-                      <TextField
-                        id="password"
-                        size="small"
-                        {...register("password")}
-                        fullWidth
-                        label="Senha"
-                        type="password"
-                        placeholder="sua senha..."
-                        variant="outlined"
-                      />
-                      <p className="error-message">
-                        {errors.password?.message}
-                      </p>
-                    </div>
-                  </Grid>
-                </Grid>
-                <ButtonDefault
-                  link="/register"
-                  contentBtnPrimary={isLoading ? "Aguarde..." : "Acessar"}
-                  contentBtnSecondary="Crie sua conta"
-                />
-                <br />
+            <Grid container spacing={2}>
+              <Grid item lg={6} md={6} xs={12}>
+                <div className="d-flex flex-column gap-1">
+                  <TextField
+                    id="email"
+                    {...register("email")}
+                    label="Email"
+                    size="small"
+                    fullWidth
+                    placeholder="usuario@dominio.com"
+                    variant="outlined"
+                  />
+                  <p className="error-message">{errors.email?.message}</p>
+                </div>
+              </Grid>
+              <Grid item lg={6} md={6} xs={12}>
+                <div className="d-flex flex-column gap-1">
+                  <TextField
+                    id="password"
+                    size="small"
+                    {...register("password")}
+                    fullWidth
+                    label="Senha"
+                    type="password"
+                    placeholder="sua senha..."
+                    variant="outlined"
+                  />
+                  <p className="error-message">{errors.password?.message}</p>
+                </div>
+              </Grid>
+            </Grid>
+            <ButtonDefault
+              link="/register"
+              contentBtnPrimary={isLoading ? "Aguarde..." : "Acessar"}
+              contentBtnSecondary="Crie sua conta"
+            />
+            <br />
 
-                <a href="/resetPassword" onClick={() => clearLocalStorage()}>
-                  {" "}
-                  Esqueci minha senha
-                </a>
-              </Box>
-            </Paper>
-          </CardContent>
-        </Card>
+            <a href="/resetPassword" onClick={() => clearLocalStorage()}>
+              {" "}
+              Esqueci minha senha
+            </a>
+          </Box>
+        </Paper>
       </div>
     </>
   );

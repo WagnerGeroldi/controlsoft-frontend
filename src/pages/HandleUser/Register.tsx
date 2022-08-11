@@ -21,7 +21,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 /* Imports CSS */
 import "../styles/alert.scss";
-import "../styles/Register.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 /* Imports Extras */
@@ -32,6 +31,7 @@ import {
   setUserLocalStorage,
 } from "../../state/SaveLocalStorage";
 import { Head } from "../partials/Head";
+import { HeaderDefault } from "../partials/HeaderDefault";
 
 /*Interface*/
 interface IUserRegister {
@@ -61,7 +61,7 @@ export function Register() {
   } = useForm<IUserRegister>({
     resolver: yupResolver(validationRegistrerUser),
   });
-
+ 
   /* consulta backend */
   const registerUser = (data: IUserRegister) =>
     api
@@ -96,68 +96,71 @@ export function Register() {
   return (
     <>
       <Head title="Rede Unisoft - Faça seu cadastro" />
-
-      <div className="container">
-        <Card sx={{ maxWidth: 875 }}>
-          <ToastContainer />
-          <CardContent>
-            <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
-              <i className="fa fa-user-plus fa-2x" aria-hidden="true"></i> Crie
-              sua conta
-            </Typography>
-            <br />
-            <p>
-              Para fazer seu cadastro apenas prencha este breve formulário,
-              vamos enviar uma senha provisória em seu e-mail para que tenha
-              acesso ao sistema, assim já validamos seu cadastro!
-            </p>
-            <Paper sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1 }}>
-              <Box
-                onSubmit={handleSubmit(registerUser)}
-                component="form"
-                sx={{ flexGrow: 1 }}
-                noValidate
-                autoComplete="off"
-              >
-                <Grid container spacing={2}>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <div className="d-flex flex-column gap-1">
-                      <TextField
-                        id="name"
-                        {...register("name")}
-                        label="Nome Completo"
-                        variant="outlined"
-                        fullWidth
-                        placeholder="Exe: João da Silva"
-                        size="small"
-                      />
-                      <p className="error-message">{errors.name?.message}</p>
-                    </div>
-                  </Grid>
-                  <Grid item lg={6} md={6} xs={12}>
-                    <div className="d-flex flex-column gap-1">
-                      <TextField
-                        id="email"
-                        {...register("email")}
-                        label="Email"
-                        size="small"
-                        fullWidth
-                        placeholder="usuario@dominio.com"
-                        variant="outlined"
-                      />
-                      <p className="error-message">{errors.email?.message}</p>
-                    </div>
-                  </Grid>
-                </Grid>
-                <ButtonDefault
-                  link="/login"
-                  contentBtnPrimary={isLoading ? "Aguarde..." : "Cadastrar"}
-                  contentBtnSecondary="Cancelar"
-                />
-              </Box>
-            </Paper>
-          </CardContent>
-        </Card>
+      <HeaderDefault />
+      <ToastContainer />
+      <div className="container-fluid mt-5">
+        <Paper
+          sx={{
+            p: 2,
+            margin: "auto",
+            flexGrow: 1,
+            maxWidth: 600,
+          }}
+        >
+          <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
+            <i className="fa fa-user-plus fa-2x" aria-hidden="true"></i> Crie
+            sua conta
+          </Typography>
+          <br />
+          <p>
+            Para fazer seu cadastro apenas prencha este breve formulário, vamos
+            enviar uma senha provisória em seu e-mail para que tenha acesso ao
+            sistema, assim já validamos seu cadastro!
+          </p>
+          <Box
+            onSubmit={handleSubmit(registerUser)}
+            component="form"
+            sx={{ flexGrow: 1 }}
+            noValidate
+            autoComplete="off"
+          >
+            <Grid container spacing={2}>
+              <Grid item lg={6} md={6} xs={12}>
+                <div className="d-flex flex-column gap-1">
+                  <TextField
+                    id="name"
+                    {...register("name")}
+                    label="Nome Completo"
+                    variant="outlined"
+                    fullWidth
+                    placeholder="Exe: João da Silva"
+                    size="small"
+                  />
+                  <p className="error-message">{errors.name?.message}</p>
+                </div>
+              </Grid>
+              <Grid item lg={6} md={6} xs={12}>
+                <div className="d-flex flex-column gap-1">
+                  <TextField
+                    id="email"
+                    {...register("email")}
+                    label="Email"
+                    size="small"
+                    fullWidth
+                    placeholder="usuario@dominio.com"
+                    variant="outlined"
+                  />
+                  <p className="error-message">{errors.email?.message}</p>
+                </div>
+              </Grid>
+            </Grid>
+            <ButtonDefault
+              link="/login"
+              contentBtnPrimary={isLoading ? "Aguarde..." : "Cadastrar"}
+              contentBtnSecondary="Cancelar"
+            />
+          </Box>
+        </Paper>
       </div>
     </>
   );

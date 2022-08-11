@@ -24,7 +24,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 /* Imports CSS */
 import "../styles/alert.scss";
-import "../styles/Register.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 /* Imports Extras */

@@ -14,17 +14,16 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+
 
 /* Imports Libs */
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { mask } from "remask";
+
 
 /* Imports CSS */
 import "../styles/alert.scss";
-import "../styles/Register.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 /* Imports Extras */

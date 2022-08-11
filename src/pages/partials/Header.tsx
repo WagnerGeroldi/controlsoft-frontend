@@ -18,10 +18,9 @@ import HomeIcon from "@mui/icons-material/Home";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import InventoryIcon from "@mui/icons-material/Inventory";
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
-/*imports CSS */
-import "./Header.scss";
+import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
+
 
 /*imports IMAGENS */
 import logo from "../../assets/images/logo-mini.svg";
@@ -38,7 +37,6 @@ import { ShowSaudation } from "../../services/ShowSaudation";
 import { HandleDate } from "../../services/HandleDate";
 
 export function Header(this: any) {
-
   const user = getUserLocalStorage();
   const [menuOpen, setMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -51,8 +49,8 @@ export function Header(this: any) {
   let navigate = useNavigate();
 
   function logout() {
-    setUserLocalStorage(null)
-    setTokenLocalStorage(null)
+    setUserLocalStorage(null);
+    setTokenLocalStorage(null);
     setAuthLocalStorage(null);
     navigate(`/`);
   }
@@ -99,13 +97,21 @@ export function Header(this: any) {
             <ListItemText>Categorias</ListItemText>
           </ListItem>
 
-          <ListItem button onClick={() => handleMenuClick(`/order/newDecreaseOrder/${user.id}`)}>
+          <ListItem
+            button
+            onClick={() =>
+              handleMenuClick(`/order/newDecreaseOrder/${user.id}`)
+            }
+          >
             <ListItemIcon>
               <ArrowDropDownCircleIcon />
             </ListItemIcon>
             <ListItemText>Baixar produtos</ListItemText>
           </ListItem>
-          <ListItem button onClick={() => handleMenuClick(`/report/${user.id}`)}>
+          <ListItem
+            button
+            onClick={() => handleMenuClick(`/report/${user.id}`)}
+          >
             <ListItemIcon>
               <LocalPrintshopIcon />
             </ListItemIcon>
@@ -122,8 +128,9 @@ export function Header(this: any) {
           </ListItem>
         </List>
       </Drawer>
-      <header className="header-main">
-        <div className="area-logo">
+
+      <div className="row bg-light d-flex justify-content-between p-2">
+        <div className="col-md-6 col-sm-12 d-flex align-items-center mb-3">
           <IconButton
             size="large"
             edge="start"
@@ -144,34 +151,41 @@ export function Header(this: any) {
             </div>
           </div>
         </div>
-        <p>
-          {!user ? (
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
-          ) : (
-            <div className="btn-header">
-              <div>
-                <span>
-                  {" "}
-                  {ShowSaudation()} <strong>{user.name}</strong>
-                </span>
-                <br />
-                <span>
-                  <small>
-                    Último acesso:{" "}
-                    <span className="lastacess"> {lastacess} </span>
-                  </small>
-                </span>
-              </div>
+        <div className="col-md-6 col-sm-12 d-flex justify-content-end">
+          <p>
+            {!user ? (
+              <Link to="/login">
+                <button>Login</button>
+              </Link>
+            ) : (
+              <div className="d-flex gap-3">
+                <div>
+                  <span>
+                    {" "}
+                    {ShowSaudation()} <strong>{user.name}</strong>
+                  </span>
+                  <br />
+                  <span>
+                    <small>
+                      Último acesso:{" "}
+                      <span className="lastacess"> {lastacess} </span>
+                    </small>
+                  </span>
+                </div>
 
-              <Button variant="contained" color="primary" onClick={handleOpen}>
-                Sair
-              </Button>
-            </div>
-          )}
-        </p>
-      </header>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleOpen}
+                >
+                  Sair
+                </Button>
+              </div>
+            )}
+          </p>
+        </div>
+      </div>
+
       <ModalConfirm
         action={() => logout()}
         title="Tem certeza que deseja sair?"

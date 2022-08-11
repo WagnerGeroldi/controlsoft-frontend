@@ -28,6 +28,7 @@ import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
 import { Head } from "../partials/Head";
 import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
+import { HeaderDefault } from "../partials/HeaderDefault";
 
 /*interface*/
 
@@ -89,55 +90,57 @@ export function ResetPassword() {
   return (
     <>
       <Head title="Rede Unisoft - Reset de Senha" />
-      <div className="container">
-        <Card sx={{ maxWidth: 875 }}>
-          <ToastContainer />
-          <CardContent>
-            <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
-              <i className="fa fa-refresh fa-2x" aria-hidden="true"></i>{" "}
-              Recuperar senha
-            </Typography>
-            <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-              Uma senha provisória será enviada em seu email, use ela para
-              acessar o sistema! <br />
-              Quando acessar o sistema, você será redirecionado para trocar a
-              senha!
-            </Typography>
-            <Paper sx={{ p: 2, margin: "auto", maxWidth: 1100, flexGrow: 1 }}>
-              <Box
-                onSubmit={handleSubmit(recoverPassword)}
-                component="form"
-                sx={{ flexGrow: 1 }}
-                noValidate
-                autoComplete="off"
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <div className="d-flex flex-column gap-1">
-                      <TextField
-                        id="email"
-                        {...register("email")}
-                        label="Email"
-                        size="small"
-                        fullWidth
-                        placeholder="usuario@dominio.com"
-                        variant="outlined"
-                      />
-                      <p className="error-message">{errors.email?.message}</p>
-                    </div>
-                  </Grid>
-                </Grid>
-                <ButtonDefault
-                  link="/login"
-                  contentBtnPrimary={
-                    isLoading ? "Aguarde..." : "Recuperar senha"
-                  }
-                  contentBtnSecondary="Cancelar"
-                />
-              </Box>
-            </Paper>
-          </CardContent>
-        </Card>
+      <HeaderDefault />
+      <ToastContainer />
+      <div className="container-fluid mt-5 mx-auto">
+        <Paper
+          sx={{
+            p: 2,
+            margin: "auto",
+            flexGrow: 1,
+            maxWidth: 550,
+          }}
+        >
+          <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
+            <i className="fa fa-refresh fa-2x" aria-hidden="true"></i> Recuperar
+            senha
+          </Typography>
+          <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+            Uma senha provisória será enviada em seu email, use ela para acessar
+            o sistema! <br />
+            Quando acessar o sistema, você será redirecionado para trocar a
+            senha!
+          </Typography>
+          <Box
+            onSubmit={handleSubmit(recoverPassword)}
+            component="form"
+            sx={{ flexGrow: 1 }}
+            noValidate
+            autoComplete="off"
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <div className="d-flex flex-column gap-1">
+                  <TextField
+                    id="email"
+                    {...register("email")}
+                    label="Email"
+                    size="small"
+                    fullWidth
+                    placeholder="usuario@dominio.com"
+                    variant="outlined"
+                  />
+                  <p className="error-message">{errors.email?.message}</p>
+                </div>
+              </Grid>
+            </Grid>
+            <ButtonDefault
+              link="/login"
+              contentBtnPrimary={isLoading ? "Aguarde..." : "Recuperar senha"}
+              contentBtnSecondary="Cancelar"
+            />
+          </Box>
+        </Paper>
       </div>
     </>
   );
