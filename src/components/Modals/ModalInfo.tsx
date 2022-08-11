@@ -37,7 +37,7 @@ function ModalInfo(props: any) {
           </Typography>
           <div className="line-button">
             <Link to={props.link}>
-              <Button>Sair mesmo assim</Button>
+              <Button>{props.textButon}</Button>
             </Link>
           </div>
         </Box>

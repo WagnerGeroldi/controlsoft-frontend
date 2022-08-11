@@ -205,6 +205,7 @@ export function UpdatePassword() {
           text={textModal}
           setOpen={open}
           setClose={handleClose}
+          textButon="Sair mesmo assim"
         />
       </div>
     </>

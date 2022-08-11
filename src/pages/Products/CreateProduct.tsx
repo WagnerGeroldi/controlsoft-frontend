@@ -15,13 +15,12 @@ import {
   MenuItem,
   IconButton,
 } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 
 /* Imports Libs */
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { mask } from "remask";
 
 /* Imports CSS */
 import "../styles/alert.scss";
@@ -33,10 +32,11 @@ import { api } from "../../api/api";
 import { ButtonDefault } from "../../components/Button";
 import { Header } from "../partials/Header";
 import { Head } from "../partials/Head";
-import {
-  getTokenLocalStorage,
-  getUserLocalStorage,
-} from "../../state/SaveLocalStorage";
+import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
+
+/*Import de Componentes */
+import { ModalInsertCategory } from "../../components/Modals/ModalInsertCategory";
+import { ModalInfo } from "../../components/Modals/ModalInfo";
 
 /*Interface*/
 interface IProductRegister {
@@ -60,6 +60,21 @@ export function CreateProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState([] as any);
   const { id } = useParams() as { id: string };
+  const [open, setOpen] = useState(false);
+  const [openModalInfo, setOpenModalInfo] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+    window.location.reload();
+  };
+
+  const handleCloseModalInfo = () => {
+    setOpen(false);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   /*lidar com formulário */
   const {
@@ -107,8 +122,8 @@ export function CreateProduct() {
           "x-access-token": token,
         },
       })
-      .then((res) => {
-        setValues(res.data);
+      .then((res) => {        
+        res.data.length === 0 ? setOpenModalInfo(true) : setValues(res.data);
       })
       .catch((err) => {
         switch (err.response.status) {
@@ -215,10 +230,9 @@ export function CreateProduct() {
                       <IconButton
                         aria-label="update"
                         size="large"
-                        // onClick={}
+                        onClick={() => handleClickOpen()}
                       >
-                        <AddIcon
-                        color="primary" />
+                        <AddIcon color="primary" />
                       </IconButton>
                     </div>
                   </Grid>
@@ -233,6 +247,21 @@ export function CreateProduct() {
             </Paper>
           </CardContent>
         </Card>
+
+        <ModalInsertCategory
+          setOpen={open}
+          setClose={handleClose}
+          infoOne="Excluir"
+        />
+
+        <ModalInfo
+          title="Atenção"
+          link={`/category/createCategory/${id}`}
+          text="Sua lista de Categorias está vazia, e é obrigatório indicar uma para cadastrar o produto. Vá para a seção de categorias e cadastre as categorias necessárias para cadastrar seus produtos"
+          setOpen={openModalInfo}
+          setClose={handleCloseModalInfo}
+          textButon= "Cadastrar categoria"
+        />
       </div>
     </>
   );

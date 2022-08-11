@@ -40,6 +40,7 @@ import { ModalConfirm } from "../../components/Modals/ModalConfirm";
 import { ModalClearList } from "../../components/Modals/ModalClearList";
 import { Header } from "../partials/Header";
 import { Head } from "../partials/Head";
+import { ModalInfo } from "../../components/Modals/ModalInfo";
 
 /* Validações */
 const validationRegistrerUser = yup.object().shape({
@@ -68,6 +69,13 @@ export function NewDecreaseOrder() {
     useState(false);
 
   const [openModalCancelSale, setOpenModalCancelSale] = useState(false);
+  const [openModalInfo, setOpenModalInfo] = useState(false);
+
+  const handleCloseModalInfo = () => {
+    setOpen(false);
+  };
+
+
   const handleClose = () => setOpen(false);
   const handleCloseModalClearList = () => setOpenModalClearList(false);
   const handleCloseModalCancelSale = () => setOpenModalCancelSale(false);
@@ -113,6 +121,7 @@ export function NewDecreaseOrder() {
         },
       })
       .then((res) => {
+        res.data.length === 0 ? setOpenModalInfo(true) : setProducts(res.data);
         setProducts(res.data);
       })
       .catch((err) => {
@@ -380,7 +389,7 @@ export function NewDecreaseOrder() {
 
             <div className="d-flex align-items-center gap-2 flex-wrap justify-content-center">
               {order.length === 0 ? (
-                <div >Aguardando produtos....</div>
+                <div>Aguardando produtos....</div>
               ) : (
                 <div className="d-flex gap-2">
                   <Button
@@ -443,6 +452,15 @@ export function NewDecreaseOrder() {
         link={`#`}
         setClose={handleCloseModalRegisterOutOfStock}
         infoOne="Baixar"
+      />
+
+      <ModalInfo
+        title="Atenção"
+        link={`/products/createProduct/${id}`}
+        text="Sua lista de produtos está vazia, e é obrigatório ter produtos para usar este local. Vá para  cadastre alguns produtos e volte aqui :)"
+        setOpen={openModalInfo}
+        setClose={handleCloseModalInfo}
+        textButon="Cadastrar produto"
       />
     </>
   );
