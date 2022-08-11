@@ -11,7 +11,6 @@ import { api } from "../../api/api";
 import { Header } from "../partials/Header";
 
 /*imports styles CSS */
-
 import "react-toastify/dist/ReactToastify.css";
 
 /*imports MUI */
@@ -23,31 +22,26 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { ModalConfirm } from "../../components/Modals/ModalConfirm";
 import { Head } from "../partials/Head";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import { HandleOnlyDate } from "../../services/HandleOnlyDate";
 import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
 
 const FilterComponent = ({ filterText, onFilter, onClear }: any) => (
   <>
-  <div className="d-flex ">
-
-    <input
-      id="search"
-      type="text"
-      placeholder="Pesquisar..."
-      aria-label="Search Input"
-      value={filterText}
-      onChange={onFilter}
-    />
-    <Button
-      id="button"
-      className="bg-primary text-white"
-      type="button"
-      onClick={onClear}
-    >
-      X
-    </Button>
-  </div>
+    <div className="d-flex  ">
+      <input
+        id="search"
+        type="text"
+        placeholder="Pesquisar..."
+        aria-label="Search Input"
+        value={filterText}
+        onChange={onFilter}
+      />
+      <Button variant="contained" id="button" type="button" onClick={onClear}>
+        <ClearIcon />
+      </Button>
+    </div>
   </>
 );
 
@@ -256,9 +250,10 @@ export function Products(this: any) {
           }}
         >
           <div className="d-flex flex-wrap justify-content-between gap-2">
-            <div className="d-flex gap-2 column-mobile">
+            <div className="d-flex gap-2 btn-default">
               <Link to={`/products/createProduct/${id}`}>
                 <Button
+                  className="btn-default flex-row"
                   variant="contained"
                   color="success"
                   startIcon={<AddIcon />}
@@ -268,6 +263,7 @@ export function Products(this: any) {
               </Link>
               <Link to={`/products/updateStock/${id}`}>
                 <Button
+                  className="d-flex gap-2 btn-default flex-row"
                   variant="contained"
                   color="primary"
                   startIcon={<ArrowUpwardIcon />}

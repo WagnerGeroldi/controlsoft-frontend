@@ -23,26 +23,22 @@ import AddIcon from "@mui/icons-material/Add";
 import { ModalConfirm } from "../../components/Modals/ModalConfirm";
 import { Head } from "../partials/Head";
 import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const FilterComponent = ({ filterText, onFilter, onClear }: any) => (
   <>
-  <div className="d-flex ">
-    <input
-      id="search"
-      type="text"
-      placeholder="Pesquisar..."
-      aria-label="Search Input"
-      value={filterText}
-      onChange={onFilter}
-    />
-    <Button
-      id="button"
-      className="bg-primary text-white"
-      type="button"
-      onClick={onClear}
-    >
-      X
-    </Button>
+    <div className="d-flex ">
+      <input
+        id="search"
+        type="text"
+        placeholder="Pesquisar..."
+        aria-label="Search Input"
+        value={filterText}
+        onChange={onFilter}
+      />
+      <Button variant="contained" id="button" type="button" onClick={onClear}>
+        <ClearIcon />
+      </Button>
     </div>
   </>
 );

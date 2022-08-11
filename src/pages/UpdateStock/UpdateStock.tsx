@@ -375,8 +375,9 @@ export function UpdateStock() {
                       Aguardando produtos....
                   </div>
                 ) : (
-                  <div className="d-flex gap-2">
+                  <div className="d-flex gap-2 btn-default">
                   <Button
+                  
                     onClick={() => handleClickOpenModalRegisterOutOfStock()}
                     variant="contained"
                     color="primary"

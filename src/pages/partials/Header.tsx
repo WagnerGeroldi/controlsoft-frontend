@@ -21,7 +21,6 @@ import InventoryIcon from "@mui/icons-material/Inventory";
 import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 
-
 /*imports IMAGENS */
 import logo from "../../assets/images/logo-mini.svg";
 
