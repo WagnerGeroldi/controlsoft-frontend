@@ -34,6 +34,8 @@ import {
 } from "../../state/SaveLocalStorage";
 import { Head } from "../partials/Head";
 import { HandleOnlyDate } from "../../services/HandleOnlyDate";
+import React from "react";
+import { Spinner } from "../../components/Spinner";
 
 /*Interface*/
 interface IUser {
@@ -266,7 +268,7 @@ export function UpdateProduct() {
                 </Grid>
                 <ButtonDefault
                   link={`/products/${user.id}`}
-                  contentBtnPrimary={isLoading ? "Aguarde..." : "Salvar"}
+                  contentBtnPrimary={isLoading ? <Spinner /> : "Salvar"}
                   contentBtnSecondary="Cancelar"
                 />
               </Box>

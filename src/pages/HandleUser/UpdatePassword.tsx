@@ -36,6 +36,8 @@ import { api } from "../../api/api";
 import { ButtonSubmit } from "../../components/ButtonSubmit";
 import { ModalInfo } from "../../components/Modals/ModalInfo";
 import { Head } from "../partials/Head";
+import React from "react";
+import { Spinner } from "../../components/Spinner";
 
 interface IPassword {
   password: string;
@@ -197,7 +199,7 @@ export function UpdatePassword() {
                 <div className="container-btn">
                   <ButtonSubmit
                     contentBtnPrimary={
-                      isLoading ? "Aguarde..." : "Alterar senha"
+                      isLoading ? <Spinner /> : "Alterar senha"
                     }
                   />
                   <Button onClick={handleOpen}>Cancelar</Button>

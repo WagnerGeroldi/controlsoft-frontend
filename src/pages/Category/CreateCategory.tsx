@@ -1,4 +1,5 @@
 /* Imports REACT */
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -28,6 +29,7 @@ import { ButtonDefault } from "../../components/Button";
 import { Header } from "../partials/Header";
 import { Head } from "../partials/Head";
 import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
+import { Spinner } from "../../components/Spinner";
 
 /*Interface*/
 interface ICategoryRegister {
@@ -124,7 +126,7 @@ export function CreateCategory() {
               </Grid>
               <ButtonDefault
                 link={`/category/${id}`}
-                contentBtnPrimary={isLoading ? "Aguarde..." : "Cadastrar"}
+                contentBtnPrimary={isLoading ? <Spinner /> : "Cadastrar"}
                 contentBtnSecondary="Cancelar"
               />
             </Box>

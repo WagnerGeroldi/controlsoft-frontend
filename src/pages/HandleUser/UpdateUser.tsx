@@ -35,6 +35,8 @@ import {
   setUserLocalStorage,
 } from "../../state/SaveLocalStorage";
 import { Head } from "../partials/Head";
+import React from "react";
+import { Spinner } from "../../components/Spinner";
 
 /*Interface*/
 interface IUser {
@@ -168,7 +170,7 @@ export function UpdateUser() {
                 </Grid>
                 <ButtonDefault
                   link={`/user/config/${user.id}`}
-                  contentBtnPrimary={isLoading ? "Aguarde..." : "Salvar"}
+                  contentBtnPrimary={isLoading ? <Spinner /> : "Salvar"}
                   contentBtnSecondary="Cancelar"
                 />
               </Box>

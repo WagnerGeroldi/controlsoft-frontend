@@ -7,6 +7,7 @@ import { Head } from "./partials/Head";
 
 import { getUserLocalStorage } from "../state/SaveLocalStorage";
 import { HeaderDefault } from "./partials/HeaderDefault";
+import React from "react";
 
 export function Initial() {
   const userStorage = getUserLocalStorage();

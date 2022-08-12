@@ -35,6 +35,8 @@ import {
 import { Head } from "../partials/Head";
 import { HandleOnlyDate } from "../../services/HandleOnlyDate";
 import { Header } from "../partials/Header";
+import React from "react";
+import { Spinner } from "../../components/Spinner";
 
 /*Interface*/
 interface ICategory {
@@ -173,7 +175,7 @@ export function UpdateCategory() {
               </Grid>
               <ButtonDefault
                 link={`/category/${user.id}`}
-                contentBtnPrimary={isLoading ? "Aguarde..." : "Salvar"}
+                contentBtnPrimary={isLoading ? <Spinner /> : "Salvar"}
                 contentBtnSecondary="Cancelar"
               />
             </Box>

@@ -34,6 +34,8 @@ import {
 import { ButtonDefault } from "../components/Button";
 import { Head } from "./partials/Head";
 import { HeaderDefault } from "./partials/HeaderDefault";
+import React from "react";
+import { Spinner } from "../components/Spinner";
 
 interface IUser {
   email: string;
@@ -157,7 +159,7 @@ export function Login() {
             </Grid>
             <ButtonDefault
               link="/register"
-              contentBtnPrimary={isLoading ? "Aguarde..." : "Acessar"}
+              contentBtnPrimary={isLoading ? <Spinner /> : "Acessar"}
               contentBtnSecondary="Crie sua conta"
             />
             <br />

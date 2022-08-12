@@ -1,4 +1,5 @@
 /*imports CSS */
+import React from "react";
 import "./HeaderDefault.scss";
 
 export function HeaderDefault() {

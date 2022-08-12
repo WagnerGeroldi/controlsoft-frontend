@@ -1,14 +1,16 @@
+
+
 export interface IButtonSubmit {
-  contentBtnPrimary: string;
+  contentBtnPrimary: string | any;
 }
 
 export interface IButton {
   link: string;
-  contentBtnPrimary: string;
+  contentBtnPrimary: string | any;
   contentBtnSecondary: string;
 }
 
 export interface IButtonUnique {
   link: string;
-  contentBtn: string;
+  contentBtn: string | any;
 }

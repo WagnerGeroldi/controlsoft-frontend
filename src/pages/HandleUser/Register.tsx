@@ -32,6 +32,8 @@ import {
 } from "../../state/SaveLocalStorage";
 import { Head } from "../partials/Head";
 import { HeaderDefault } from "../partials/HeaderDefault";
+import React from "react";
+import { Spinner } from "../../components/Spinner";
 
 /*Interface*/
 interface IUserRegister {
@@ -156,7 +158,7 @@ export function Register() {
             </Grid>
             <ButtonDefault
               link="/login"
-              contentBtnPrimary={isLoading ? "Aguarde..." : "Cadastrar"}
+              contentBtnPrimary={isLoading ? <Spinner /> : "Cadastrar"}
               contentBtnSecondary="Cancelar"
             />
           </Box>

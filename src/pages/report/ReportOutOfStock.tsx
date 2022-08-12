@@ -1,4 +1,5 @@
 /*imports react */
+import React from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 
 /*imports extras */

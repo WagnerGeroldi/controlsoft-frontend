@@ -1,3 +1,4 @@
+import React from "react";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
 import { Header } from "./partials/Header";
 
@@ -8,10 +9,11 @@ import { api } from "../api/api";
 
 import { Head } from "./partials/Head";
 import { getTokenLocalStorage } from "../state/SaveLocalStorage";
+import { Spinner } from "../components/Spinner";
 
 export function Dashboard() {
   const { id } = useParams() as { id: string };
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([] as any);
   const token = getTokenLocalStorage();
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ export function Dashboard() {
         },
       })
       .then((res) => {
-        setProducts(res.data);
+          setProducts(res.data)
       })
       .catch((err) => {
         switch (err.response.status) {
@@ -73,7 +75,7 @@ export function Dashboard() {
                       Produtos cadastrados
                     </Typography>
                     <Typography variant="h4" component="div">
-                      {products}
+                      {products.length === 0 ? <Spinner /> : products}
                     </Typography>
                   </CardContent>
                 </Card>

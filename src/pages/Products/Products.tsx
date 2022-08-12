@@ -26,6 +26,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 import { HandleOnlyDate } from "../../services/HandleOnlyDate";
 import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
+import React from "react";
 
 const FilterComponent = ({ filterText, onFilter, onClear }: any) => (
   <>

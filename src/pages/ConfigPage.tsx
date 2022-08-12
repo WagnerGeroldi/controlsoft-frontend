@@ -23,6 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 import { Head } from "./partials/Head";
+import React from "react";
 
 export function ConfigPage() {
   const [userInfo, setUserInfo] = useState({} as any);

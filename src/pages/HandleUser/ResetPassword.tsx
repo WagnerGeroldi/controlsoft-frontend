@@ -29,6 +29,8 @@ import { ButtonDefault } from "../../components/Button";
 import { Head } from "../partials/Head";
 import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
 import { HeaderDefault } from "../partials/HeaderDefault";
+import React from "react";
+import { Spinner } from "../../components/Spinner";
 
 /*interface*/
 
@@ -136,7 +138,7 @@ export function ResetPassword() {
             </Grid>
             <ButtonDefault
               link="/login"
-              contentBtnPrimary={isLoading ? "Aguarde..." : "Recuperar senha"}
+              contentBtnPrimary={isLoading ? <Spinner /> : "Recuperar senha"}
               contentBtnSecondary="Cancelar"
             />
           </Box>

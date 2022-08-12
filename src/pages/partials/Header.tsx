@@ -37,6 +37,7 @@ import { HandleDate } from "../../services/HandleDate";
 
 
 import "./Header.scss"
+import React from "react";
 
 export function Header(this: any) {
   const user = getUserLocalStorage();

@@ -1,4 +1,5 @@
 /* Imports REACT */
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -36,6 +37,7 @@ import { getTokenLocalStorage } from "../../state/SaveLocalStorage";
 /*Import de Componentes */
 import { ModalInsertCategory } from "../../components/Modals/ModalInsertCategory";
 import { ModalInfo } from "../../components/Modals/ModalInfo";
+import { Spinner } from "../../components/Spinner";
 
 /*Interface*/
 interface IProductRegister {
@@ -246,10 +248,9 @@ export function CreateProduct() {
                     </div>
                   </Grid>
                 </Grid>
-
                 <ButtonDefault
                   link={`/products/${id}`}
-                  contentBtnPrimary={isLoading ? "Aguarde..." : "Cadastrar"}
+                  contentBtnPrimary= {isLoading ? <Spinner /> : "Cadastrar"}
                   contentBtnSecondary="Cancelar"
                 />
               </Box>
